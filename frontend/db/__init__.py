@@ -3,7 +3,7 @@ from sqlalchemy.orm import sessionmaker, DeclarativeBase, Mapped, mapped_column
 
 
 engine = create_engine("sqlite:///users.db", echo=True)
-Session = sessionmaker(bind=engine)
+Session = sessionmaker(engine)
 
 
 class Base(DeclarativeBase):
@@ -19,5 +19,5 @@ def down():
 from .models import User, Task
 
 
-
+down()
 up()
