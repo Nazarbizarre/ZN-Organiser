@@ -1,1 +1,1 @@
-from frontend.routes import default , login, task
+from . import default , login, task

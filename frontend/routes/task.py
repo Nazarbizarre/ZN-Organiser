@@ -1,6 +1,6 @@
 from os import getenv
 
-from .. import app
+from .. import app, BACKEND_URL
 
 from flask import Flask, render_template, request, redirect, flash, url_for
 
@@ -12,7 +12,7 @@ from datetime import datetime
 
 
 
-BACKEND_URL = getenv("BACKEND_URL")
+
 
 
 @app.post("/add_task")
@@ -20,12 +20,11 @@ BACKEND_URL = getenv("BACKEND_URL")
 def add_task():
 
     data = {
-        "id": len(get(f"{BACKEND_URL}/add_task").json()) + 1,
-        "title": request.form['title'],
-        "content": request.form['content'],
+        "id": len(get(f"{BACKEND_URL}/get_tasks").json()) + 1,
+        "title": request.form.get('title'),
+        "content": request.form.get('content'),
         "published": datetime.now().isoformat(),
-        "deadline": request.form['deadline']
-
+        "deadline": request.form.get('deadline')
     }
     
 
