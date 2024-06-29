@@ -14,6 +14,15 @@ def get_tasks():
         tasks = [TaskData.model_validate(task) for task in tasks]
         return tasks
 
+
+@app.get("/task/{task_id}")
+def get_task(task_id):
+    with Session.begin() as session:
+        task = session.scalar(select(Task).where(Task.id == task_id))
+        task = TaskData.model_validate(task)
+        return task
+
+
 @app.post("/add_task")
 def add_task(data: TaskData):
     with Session.begin() as session:

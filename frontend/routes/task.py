@@ -2,12 +2,12 @@ from os import getenv
 
 from .. import app, BACKEND_URL
 
-from flask import Flask, render_template, request, redirect, flash, url_for
+from flask import render_template, request, redirect, url_for
 
-from flask_login import current_user, login_required, LoginManager, login_user
-from sqlalchemy import select
+from flask_login import login_required
+
 from requests import get, post
-from frontend.db import Session, User
+
 from datetime import datetime
 
 
@@ -19,6 +19,7 @@ from datetime import datetime
 @login_required
 def add_task():
 
+
     data = {
         "id": len(get(f"{BACKEND_URL}/get_tasks").json()) + 1,
         "title": request.form.get('title'),
@@ -26,7 +27,7 @@ def add_task():
         "published": datetime.now().isoformat(),
         "deadline": request.form.get('deadline')
     }
-    
+
 
     task = post(f"{BACKEND_URL}/add_task", json=data)
     if task.status_code == 200:
