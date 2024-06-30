@@ -3,10 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>{{task.title}}</title>
 </head>
 <body>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        
+        /* Title Styles */
+        h1 {
+            font-size: 2em;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        
+        td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+        
+        /* Horizontal Line Styles */
+        hr {
+            border: none;
+            height: 1px;
+            background-color: #333; /* Change the color as needed */
+            margin: 20px 0;
+        }
+        
+        /* Content Title Styles */
+        h2 {
+            font-size: 1.5em;
+            color: #555;
+            margin-top: 20px;
+        }
+    </style>
     <h1>Title - {{ task.title }}</h1>
+    <table>
+        <tr>
+            <td>Published on - {{task.published}}</td>
+            <td>Deadline - {{task.deadline}}</td>
+        </tr>
+    </table>
+    <hr>
     <h2>Content - {{ task.content }}</h2>
 </body>
 </html>
