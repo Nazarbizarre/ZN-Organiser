@@ -4,7 +4,7 @@ from .. import app, BACKEND_URL
 
 from flask import render_template, request, redirect, url_for
 
-from flask_login import login_required
+from flask_login import login_required, current_user
 
 from requests import get, post
 
@@ -18,10 +18,11 @@ from datetime import datetime
 @app.post("/add_task")
 @login_required
 def add_task():
-
-
+    current = current_user.email
+    print(current)
     data = {
         "id": len(get(f"{BACKEND_URL}/get_tasks").json()) + 1,
+        "author": current,
         "title": request.form.get('title'),
         "content": request.form.get('content'),
         "published": datetime.now().isoformat(),
