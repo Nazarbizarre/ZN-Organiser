@@ -2,8 +2,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, DeclarativeBase, Mapped, mapped_column
 
 
-engine = create_engine("sqlite:///my_db.db", echo=True)
-Session = sessionmaker(bind=engine)
+engine = create_engine("sqlite:///task.db", echo=True)
+Session = sessionmaker(engine)
 
 
 class Base(DeclarativeBase):
