@@ -1,5 +1,5 @@
 from pydantic import BaseModel, ConfigDict
-
+from typing import Optional
 from datetime import datetime
 
 
@@ -13,4 +13,5 @@ class TaskData(BaseModel):
     deadline: datetime
 
 class UserTasks(BaseModel):
+    id: Optional[int] = None
     email: str

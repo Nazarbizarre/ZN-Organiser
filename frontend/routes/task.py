@@ -21,7 +21,7 @@ def add_task():
     current = current_user.email
     print(current)
     data = {
-        "id": len(get(f"{BACKEND_URL}/get_tasks").json()) + 1,
+        "id": len(get(f"{BACKEND_URL}/tasks_list").json()) + 1,
         "author": current,
         "title": request.form.get('title'),
         "content": request.form.get('content'),

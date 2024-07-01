@@ -5,7 +5,7 @@ from db import Session, Task
 from schemas import TaskData, UserTasks
 
 
-# from fastapi.exceptions import HTTPException
+from fastapi.exceptions import HTTPException
 
 @app.get("/get_tasks")
 def get_tasks(data: UserTasks):
@@ -15,13 +15,16 @@ def get_tasks(data: UserTasks):
         return tasks
 
 
-@app.get("/task/{task_id}")
-def get_task(task_id):
+@app.get("/task")
+def get_task(data: UserTasks):
     with Session.begin() as session:
-        task = session.scalar(select(Task).where(Task.id == task_id))
-        task = TaskData.model_validate(task)
-        return task
-
+        task = session.scalar(select(Task).where(Task.id == data.id).where(Task.author == data.email))
+        if task:
+            task = TaskData.model_validate(task)
+            return task
+        else:
+            raise HTTPException(status_code=403, detail="Permission denied")
+            
 
 @app.post("/add_task")
 def add_task(data: TaskData):
@@ -29,3 +32,10 @@ def add_task(data: TaskData):
         task = Task(**data.model_dump())
         session.add(task)
         return task
+    
+@app.get("/tasks_list")
+def tasks_list():
+    with Session.begin() as session:
+        tasks = session.scalars(select(Task)).all()
+        tasks = [TaskData.model_validate(task) for task in tasks]
+        return tasks

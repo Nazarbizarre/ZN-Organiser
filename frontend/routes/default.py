@@ -12,6 +12,7 @@ def index():
     current = current_user.email
     print(current)
     data = {
+        
         "email": current
     }
     tasks = {
