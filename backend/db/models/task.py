@@ -7,7 +7,6 @@ class Task(Base):
     __tablename__ = "task"
 
     title: Mapped[str]
-    author: Mapped[str]
     content: Mapped[str]
     published: Mapped[date]
     deadline: Mapped[datetime]
