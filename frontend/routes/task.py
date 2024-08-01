@@ -20,8 +20,9 @@ from datetime import datetime
 def add_task():
     current = current_user.email
     print(current)
-    data = {
-        "id": len(get(f"{BACKEND_URL}/get_tasks").json()) + 1,
+    print(len(get(f"{BACKEND_URL}/get_tasks").json())),
+    data = {  
+        # "id": len(get(f"{BACKEND_URL}/get_tasks").json()),
         "author": current,
         "title": request.form.get('title'),
         "content": request.form.get('content'),

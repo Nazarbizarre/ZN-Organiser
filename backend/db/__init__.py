@@ -18,5 +18,6 @@ def down():
 
 from .models import Task
 
+
 down()
 up()
