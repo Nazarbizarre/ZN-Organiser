@@ -4,11 +4,11 @@ from .. import app
 from flask import Flask, render_template, request, redirect, flash, url_for
 
 from flask_login import current_user, login_required, LoginManager, login_user
-from frontend.forms import RegisterForm, LoginForm
+from ..forms import RegisterForm, LoginForm
 from sqlalchemy import select
 
 from flask_login import login_user
-from frontend.db import Session, User
+from ..db import Session, User
 
 
 login_manager = LoginManager()

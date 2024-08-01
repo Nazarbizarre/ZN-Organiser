@@ -18,10 +18,12 @@ from datetime import datetime
 @app.post("/add_task")
 @login_required
 def add_task():
-
-
-    data = {
-        "id": len(get(f"{BACKEND_URL}/get_tasks").json()) + 1,
+    current = current_user.email
+    print(current)
+    print(len(get(f"{BACKEND_URL}/get_tasks").json())),
+    data = {  
+        # "id": len(get(f"{BACKEND_URL}/get_tasks").json()),
+        "author": current,
         "title": request.form.get('title'),
         "content": request.form.get('content'),
         "published": datetime.now().isoformat(),

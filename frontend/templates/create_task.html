@@ -61,9 +61,12 @@
                             <textarea id="content" name="content" rows="4" class="form-control" required></textarea>
                         </div>
                         <div class="mb-3">
-                            <label for="deadline" class="form-label">Deadline:</label>
-                            <input type="datetime-local" id="deadline" name="deadline" class="form-control" required>
-                        </div>
+                            <form>
+                                <div class="mb-3">
+                                    <label for="day-month" class="form-label">Date:</label>
+                                    <input type="date" id="deadline" name="deadline" class="form-control" required>
+                                </div>
+                            </form>
                         <button type="submit" class="btn btn-primary w-100">Submit</button>
                     </form>
                 </div>
