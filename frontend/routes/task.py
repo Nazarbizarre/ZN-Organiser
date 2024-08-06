@@ -26,8 +26,9 @@ def add_task():
         "author": current,
         "title": request.form.get('title'),
         "content": request.form.get('content'),
-        "published": datetime.now().isoformat(),
-        "deadline": request.form.get('deadline')
+        "published": datetime.now().date().isoformat(),
+        "deadline": request.form.get('deadline'),
+        "theme": request.form.get("choice")
     }
 
 

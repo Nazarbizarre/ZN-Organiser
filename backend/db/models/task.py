@@ -8,6 +8,6 @@ class Task(Base):
 
     title: Mapped[str]
     content: Mapped[str]
-    published: Mapped[date]
-    deadline: Mapped[datetime]
-
+    published: Mapped[str]
+    deadline: Mapped[str]
+    theme: Mapped[str]
