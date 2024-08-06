@@ -1,6 +1,6 @@
 from pydantic import BaseModel, ConfigDict
 from typing import Optional
-from datetime import datetime
+from datetime import date
 
 
 class TaskData(BaseModel):
@@ -9,8 +9,9 @@ class TaskData(BaseModel):
     author: str
     title: str
     content: str
-    published: datetime
-    deadline: datetime
+    published: str
+    deadline: str
+    theme: str
 
 class UserTasks(BaseModel):
     email: str

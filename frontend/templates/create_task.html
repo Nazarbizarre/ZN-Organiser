@@ -43,6 +43,11 @@
             background-color: #45a049;
             border-color: #45a049;
         }
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
     </style>
 </head>
 <body>
@@ -67,6 +72,21 @@
                                     <input type="date" id="deadline" name="deadline" class="form-control" required>
                                 </div>
                             </form>
+                            <div class="radio-group">
+                                <label for="sports">
+                                    <input type="radio" id="sports" name="choice" value="Sports">
+                                    Sports
+                                </label>
+                                <label for="games">
+                                    <input type="radio" id="games" name="choice" value="Games">
+                                    Games
+                                </label>
+                                <label for="nature">
+                                    <input type="radio" id="hobby" name="choice" value="Hobby">
+                                    Hobby
+                                </label>
+                            </div>
+                
                         <button type="submit" class="btn btn-primary w-100">Submit</button>
                     </form>
                 </div>
