@@ -1,1 +1,6 @@
-from . import default , login, task, info
+from . import (default,
+               login,
+               task,
+               info, 
+               search,
+               board)
