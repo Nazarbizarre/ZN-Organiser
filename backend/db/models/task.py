@@ -4,7 +4,7 @@ from sqlalchemy.orm import Mapped
 from datetime import datetime, date
 
 class Task(Base):
-    __tablename__ = "task"
+    __tablename__ = "tasks"
 
     title: Mapped[str]
     content: Mapped[str]

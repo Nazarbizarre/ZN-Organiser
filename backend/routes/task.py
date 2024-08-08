@@ -5,7 +5,7 @@ from db import Session, Task
 from schemas import TaskData
 
 
-# from fastapi.exceptions import HTTPException
+
 
 @app.get("/get_tasks")
 def get_tasks():
