@@ -12,6 +12,7 @@ class TaskData(BaseModel):
     published: str
     deadline: str
     theme: str
+    importance: str
 
 class UserTasks(BaseModel):
     email: str

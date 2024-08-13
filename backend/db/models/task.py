@@ -12,3 +12,4 @@ class Task(Base):
     published: Mapped[str]
     deadline: Mapped[str]
     theme: Mapped[str]
+    importance: Mapped[str]

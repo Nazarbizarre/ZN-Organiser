@@ -28,9 +28,10 @@ def add_task():
         "content": request.form.get('content'),
         "published": datetime.now().date().isoformat(),
         "deadline": request.form.get('deadline'),
-        "theme": request.form.get("choice")
+        "theme": request.form.get("choice"), 
+        "importance": request.form.get("selectedColor")
     }
-
+    print(request.form.get("selectedColor"))
 
     task = post(f"{BACKEND_URL}/add_task", json=data)
     if task.status_code == 200:
