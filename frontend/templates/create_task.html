@@ -116,7 +116,6 @@
                                 </label>
                             </div>
 
-                            <form id="colorForm" method="POST">
                                 <div class="mb-3">
                                     <label for="gradient-container" name="importance" class="form-label">Importance:(🟥-high, 🟩-low)</label>
                                 </div>
@@ -125,7 +124,7 @@
                                 </div>
                                 <p>Selected Color: <span id="colorValue">#ffffff</span></p>
                                 <input type="hidden" name="selectedColor" id="selectedColor" value="#ffffff">
-                            </form>
+ 
 
 
                 
@@ -142,79 +141,72 @@
 
     <script>
         const gradientContainer = document.querySelector('.gradient-container');
-        const dragger = document.querySelector('.dragger');
-        const colorValue = document.getElementById('colorValue');
-        const selectedColorInput = document.getElementById('selectedColor');
+const dragger = document.querySelector('.dragger');
+const colorValue = document.getElementById('colorValue');
+const selectedColorInput = document.getElementById('selectedColor');
 
-        function rgbToHex(r, g, b) {
-            return (
-                "#" +
-                [r, g, b]
-                    .map(x => {
-                        const hex = x.toString(16);
-                        return hex.length === 1 ? "0" + hex : hex;
-                    })
-                    .join("")
-            );
-        }
+function rgbToHex(r, g, b) {
+    return (
+        "#" +
+        [r, g, b]
+            .map(x => {
+                const hex = x.toString(16);
+                return hex.length === 1 ? "0" + hex : hex;
+            })
+            .join("")
+    );
+}
 
-        function getColorAtPoint(x, y) {
-            const canvas = document.createElement('canvas');
-            canvas.width = gradientContainer.clientWidth;
-            canvas.height = gradientContainer.clientHeight;
-            const ctx = canvas.getContext('2d');
+function getColorAtPoint(x, y) {
+    const canvas = document.createElement('canvas');
+    canvas.width = gradientContainer.clientWidth;
+    canvas.height = gradientContainer.clientHeight;
+    const ctx = canvas.getContext('2d');
 
-            // Apply the gradient with red, yellow, and green
-            const gradient1 = ctx.createLinearGradient(0, 0, canvas.width, 0);
-            gradient1.addColorStop(0, 'red');
-            gradient1.addColorStop(0.5, 'yellow');
-            gradient1.addColorStop(1, 'green');
-            ctx.fillStyle = gradient1;
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+    const gradient1 = ctx.createLinearGradient(0, 0, canvas.width, 0);
+    gradient1.addColorStop(0, 'red');
+    gradient1.addColorStop(0.5, 'yellow');
+    gradient1.addColorStop(1, 'green');
+    ctx.fillStyle = gradient1;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            // Get the color at the specified point
-            const imageData = ctx.getImageData(x, y, 1, 1).data;
-            const hexColor = rgbToHex(imageData[0], imageData[1], imageData[2]);
-            return hexColor;
-        }
+    const imageData = ctx.getImageData(x, y, 1, 1).data;
+    return rgbToHex(imageData[0], imageData[1], imageData[2]);
+}
 
-        function updateDraggerPosition(event) {
-            const rect = gradientContainer.getBoundingClientRect();
-            let x = event.clientX - rect.left;
-            let y = event.clientY - rect.top;
+function updateDraggerPosition(event) {
+    const rect = gradientContainer.getBoundingClientRect();
+    let x = event.clientX - rect.left;
+    let y = event.clientY - rect.top;
 
-            // Ensure the dragger stays within bounds
-            x = Math.max(0, Math.min(x, gradientContainer.clientWidth));
-            y = Math.max(0, Math.min(y, gradientContainer.clientHeight));
+    x = Math.max(0, Math.min(x, gradientContainer.clientWidth));
+    y = Math.max(0, Math.min(y, gradientContainer.clientHeight));
 
-            // Move the dragger
-            dragger.style.left = `${x}px`;
-            dragger.style.top = `${y}px`;
+    dragger.style.left = `${x}px`;
+    dragger.style.top = `${y}px`;
 
-            // Get the color at the dragger's position
-            const color = getColorAtPoint(x, y);
-            colorValue.textContent = color;
-            dragger.style.backgroundColor = color;
+    const color = getColorAtPoint(x, y);
+    colorValue.textContent = color;
+    dragger.style.backgroundColor = color;
+    selectedColorInput.value = color;  // Correctly update the hidden input value
+}
 
-            // Update the hidden input field with the selected color
-            selectedColorInput.value = color;
-        }
+gradientContainer.addEventListener('mousedown', (event) => {
+    updateDraggerPosition(event);
 
-        gradientContainer.addEventListener('mousedown', (event) => {
-            updateDraggerPosition(event);
+    function onMouseMove(event) {
+        updateDraggerPosition(event);
+    }
 
-            function onMouseMove(event) {
-                updateDraggerPosition(event);
-            }
+    function onMouseUp() {
+        document.removeEventListener('mousemove', onMouseMove);
+        document.removeEventListener('mouseup', onMouseUp);
+    }
 
-            function onMouseUp() {
-                document.removeEventListener('mousemove', onMouseMove);
-                document.removeEventListener('mouseup', onMouseUp);
-            }
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+});
 
-            document.addEventListener('mousemove', onMouseMove);
-            document.addEventListener('mouseup', onMouseUp);
-        });
 
     </script>
 </body>
