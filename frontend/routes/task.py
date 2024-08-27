@@ -29,7 +29,7 @@ def add_task():
         "published": datetime.now().date().isoformat(),
         "deadline": request.form.get('deadline'),
         "theme": request.form.get("choice"), 
-        "importance": request.form.get("selectedColor")
+        "importance": request.form.get('selectedColor')
     }
     print(request.form.get("selectedColor"))
 

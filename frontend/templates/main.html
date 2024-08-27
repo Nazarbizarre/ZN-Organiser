@@ -150,8 +150,8 @@
             <a href="/task/{{ task.id }}">
                 <div class="card">
                     <div class="card-body">
-                        <h2 class="card-title">{{ task.title }}</h2>
-                        <h3 class="card-text"><span class="badge badge-primary">{{ task.deadline }}</span></h3>
+                        <h2 class="card-title" style="color: {{ task.importance }};">{{ task.title }}</h2>
+                        <h3 class="card-text"><span class="badge badge-primary"  style="background-color: {{ task.importance }};">{{ task.deadline }}</span></h3>
                     </div>
                 </div>
             </a>
