@@ -1,11 +1,9 @@
-from main import app
+from ..main import app
 from sqlalchemy import select
 from datetime import datetime
-from db import Session, Task
-from schemas import TaskData, UserTasks
+from ..db import Session, Task
+from ..schemas import TaskData, UserTasks
 
-
-# from fastapi.exceptions import HTTPException
 
 @app.get("/get_tasks")
 def get_tasks(data: UserTasks):

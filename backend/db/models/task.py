@@ -4,11 +4,12 @@ from sqlalchemy.orm import Mapped
 from datetime import datetime, date
 
 class Task(Base):
-    __tablename__ = "task"
+    __tablename__ = "tasks"
 
     title: Mapped[str]
     author: Mapped[str]
     content: Mapped[str]
-    published: Mapped[date]
-    deadline: Mapped[datetime]
-
+    published: Mapped[str]
+    deadline: Mapped[str]
+    theme: Mapped[str]
+    importance: Mapped[str]

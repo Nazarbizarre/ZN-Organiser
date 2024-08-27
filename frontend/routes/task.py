@@ -20,15 +20,18 @@ from datetime import datetime
 def add_task():
     current = current_user.email
     print(current)
-    data = {
-        "id": len(get(f"{BACKEND_URL}/get_tasks").json()) + 1,
+    print(len(get(f"{BACKEND_URL}/get_tasks").json())),
+    data = {  
+        # "id": len(get(f"{BACKEND_URL}/get_tasks").json()),
         "author": current,
         "title": request.form.get('title'),
         "content": request.form.get('content'),
-        "published": datetime.now().isoformat(),
-        "deadline": request.form.get('deadline')
+        "published": datetime.now().date().isoformat(),
+        "deadline": request.form.get('deadline'),
+        "theme": request.form.get("choice"), 
+        "importance": request.form.get('selectedColor')
     }
-
+    print(request.form.get("selectedColor"))
 
     task = post(f"{BACKEND_URL}/add_task", json=data)
     if task.status_code == 200:

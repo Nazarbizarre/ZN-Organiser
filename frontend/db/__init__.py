@@ -19,5 +19,5 @@ def down():
 from .models import User
 
 
-
+# down()
 up()

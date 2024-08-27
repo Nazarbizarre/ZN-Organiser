@@ -6,11 +6,10 @@ from flask_login import current_user, login_required
 from os import getenv
 BACKEND_URL = getenv("BACKEND_URL")
 
-@app.get("/")
+@app.get("/board")
 @login_required
-def index():
+def board():
     current = current_user.email
-    print(current)
     data = {
         "email": current
     }
@@ -18,4 +17,4 @@ def index():
         "tasks":get(f"{BACKEND_URL}/get_tasks", json=data).json()
     }
     nickname = current.split("@")[0]
-    return render_template("main.html", **tasks, nickname=nickname)
+    return render_template("board.html", **tasks, nickname=nickname)
