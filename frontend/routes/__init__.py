@@ -3,4 +3,5 @@ from . import (default,
                task,
                info, 
                search,
-               board)
+               board,
+               edit)

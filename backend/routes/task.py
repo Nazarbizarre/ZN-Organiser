@@ -27,3 +27,10 @@ def add_task(data: TaskData):
         task = Task(**data.model_dump())
         session.add(task)
         return task
+    
+@app.put("/edit_task/{task_id}")
+def edit_task(task_id):
+    with Session.begin() as session:
+        task = session.scalar(select(Task).where(Task.id == task_id))
+        task = TaskData.model_validate(task)
+        return task
