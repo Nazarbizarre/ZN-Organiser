@@ -14,3 +14,13 @@ class TaskData(BaseModel):
     theme: str
     importance: str
 
+class UserTasks(BaseModel):
+    email: str
+
+
+class TaskEdit(BaseModel):
+    title: str
+    content: str
+    deadline: str
+    theme: str
+    importance: str

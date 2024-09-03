@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Task</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            padding: 20px;
+        }
+        a {
+            color: red;
+        }
+        .form-container {
+            background-color: #1f1f1f;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        .form-container h2 {
+            margin-bottom: 20px;
+        }
+        .form-label {
+            color: #b8b8b8;
+        }
+        .form-control {
+            background-color: #333333;
+            border: none;
+            color: #ffffff;
+        }
+        .form-control::placeholder {
+            color: #b8b8b8;
+        }
+        .form-control:focus {
+            background-color: #444444;
+            color: #ffffff;
+        }
+        .btn-primary {
+            background-color: #4caf50;
+            border-color: #4caf50;
+        }
+        .btn-primary:hover {
+            background-color: #45a049;
+            border-color: #45a049;
+        }
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .gradient-container {
+            width: 600px;
+            height: 100px;
+            position: relative;
+            background: linear-gradient(to right, red, yellow, green);
+            margin-bottom: 20px;
+        }
+        .dragger {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            position: absolute;
+            background-color: #ffffff;
+            border: 2px solid #000;
+            cursor: pointer;
+        }
+        #colorValue {
+            font-weight: bold;
+        }
+        .mb-3 {
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="form-container">
+                    <h2>Edit Your Task</h2>
+                    <form action="{{ url_for('update_task', task_id=task_id) }}" method="POST">
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Title:</label>
+                            <input type="text" id="title" name="title" class="form-control" value="{{ task.title }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="content" class="form-label">Content:</label>
+                            <textarea id="content" name="content" rows="4" class="form-control" required>{{ task.content }}</textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="deadline" class="form-label">Date:</label>
+                            <input type="date" id="deadline" name="deadline" class="form-control" value="{{ task.deadline }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="choice" class="form-label">Category:</label>
+                            <div class="radio-group">
+                                <label>
+                                    <input type="radio" name="choice" value="Sports" {% if task.choice == 'Sports' %}checked{% endif %}>
+                                    Sports
+                                </label>
+                                <label>
+                                    <input type="radio" name="choice" value="Games" {% if task.choice == 'Games' %}checked{% endif %}>
+                                    Games
+                                </label>
+                                <label>
+                                    <input type="radio" name="choice" value="Hobby" {% if task.choice == 'Hobby' %}checked{% endif %}>
+                                    Hobby
+                                </label>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="importance" class="form-label">Importance (🟥-high, 🟩-low):</label>
+                            <div class="gradient-container">
+                                <div class="dragger"></div>
+                            </div>
+                            <p>Selected Color: <span id="colorValue">#ffffff</span></p>
+                            <input type="hidden" name="importance" id="selectedColor" value="{{ task.importance }}" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Save</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+        const gradientContainer = document.querySelector('.gradient-container');
+        const dragger = document.querySelector('.dragger');
+        const colorValue = document.getElementById('colorValue');
+        const selectedColorInput = document.getElementById('selectedColor');
+
+        function rgbToHex(r, g, b) {
+            return (
+                "#" +
+                [r, g, b]
+                    .map(x => {
+                        const hex = x.toString(16);
+                        return hex.length === 1 ? "0" + hex : hex;
+                    })
+                    .join("")
+            );
+        }
+
+        function getColorAtPoint(x, y) {
+            const canvas = document.createElement('canvas');
+            canvas.width = gradientContainer.clientWidth;
+            canvas.height = gradientContainer.clientHeight;
+            const ctx = canvas.getContext('2d');
+
+            const gradient1 = ctx.createLinearGradient(0, 0, canvas.width, 0);
+            gradient1.addColorStop(0, 'red');
+            gradient1.addColorStop(0.5, 'yellow');
+            gradient1.addColorStop(1, 'green');
+            ctx.fillStyle = gradient1;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            const imageData = ctx.getImageData(x, y, 1, 1).data;
+            return rgbToHex(imageData[0], imageData[1], imageData[2]);
+        }
+
+        function updateDraggerPosition(event) {
+            const rect = gradientContainer.getBoundingClientRect();
+            let x = event.clientX - rect.left;
+            let y = event.clientY - rect.top;
+
+            x = Math.max(0, Math.min(x, gradientContainer.clientWidth));
+            y = Math.max(0, Math.min(y, gradientContainer.clientHeight));
+
+            dragger.style.left = `${x}px`;
+            dragger.style.top = `${y}px`;
+
+            const color = getColorAtPoint(x, y);
+            colorValue.textContent = color;
+            dragger.style.backgroundColor = color;
+            selectedColorInput.value = color;
+        }
+
+        gradientContainer.addEventListener('mousedown', (event) => {
+            updateDraggerPosition(event);
+
+            function onMouseMove(event) {
+                updateDraggerPosition(event);
+            }
+
+            function onMouseUp() {
+                document.removeEventListener('mousemove', onMouseMove);
+                document.removeEventListener('mouseup', onMouseUp);
+            }
+
+            document.addEventListener('mousemove', onMouseMove);
+            document.addEventListener('mouseup', onMouseUp);
+        });
+    </script>
+</body>
+</html>
