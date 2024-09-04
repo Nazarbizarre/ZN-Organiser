@@ -31,6 +31,54 @@
                 color: #ffffff;
                 background-color: #333333;
             }
+            body.light-mode {
+                background-color: #ffffff;
+                color: #121212;
+            }
+    
+    
+            .toggle-container {
+                position: absolute;
+                top: 20px;
+                right: 20px;
+            }
+            
+    
+            #themeToggle {
+                display: none;
+            }
+            
+            .toggle-switch {
+                width: 60px;
+                height: 30px;
+                background-color: #ccc;
+                border-radius: 30px;
+                position: relative;
+                display: inline-block;
+                cursor: pointer;
+                transition: background-color 0.8s;
+            }
+            
+            .toggle-switch::before {
+                content: "";
+                position: absolute;
+                width: 26px;
+                height: 26px;
+                background-color: #121212;
+                border-radius: 50%;
+                top: 2px;
+                left: 2px;
+                transition: transform 0.8s;
+            }
+            
+            #themeToggle:checked + .toggle-switch {
+                background-color: #ffffff;
+            }
+            
+            #themeToggle:checked + .toggle-switch::before {
+                transform: translateX(30px);
+                background-color: #ccc;
+            }
         </style>
     {% endblock %}
 </head>
@@ -73,7 +121,12 @@
                     <input class="form-control me-2" type="search" name="query" placeholder="Search" aria-label="Search" value="{{ request.args.get('query', '') }}">
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
-                {% block navbar_items %}{% endblock %}
+                {% block navbar_items %}
+                <div class="toggle-container">
+                    <input type="checkbox" id="themeToggle">
+                    <label for="themeToggle" class="toggle-switch"></label>
+                </div>
+                {% endblock %}
             </div>
         </div>
     </nav>
