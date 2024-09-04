@@ -81,11 +81,34 @@
 
     <div class="container mt-5">
         {% block content %}
-        <!-- Main content will be inserted here -->
+        <!-- Main content will be inserted here --> 
         {% endblock %}
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz4fnFO9f2jPZWjz2IBibN1Xhm6HYXwG53gM1mJgOrMgA7B8B93yq6K6p7" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-wnxkW8z8G9ZcLAV81IQkHQu3oDzCkH0F7rD8TY7G8FZsOHxSLWx6P8P6WZEkdI5L8" crossorigin="anonymous"></script>
+    {% block scripts %}
+    <script>
+        document.getElementById('themeToggle').addEventListener('change', function() {
+            document.body.classList.toggle('light-mode', this.checked);
+
+
+            if (this.checked) {
+                localStorage.setItem('theme', 'dark');
+            } else {
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        window.onload = function() {
+            const savedTheme = localStorage.getItem('theme');
+            const themeToggle = document.getElementById('themeToggle');
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-mode');
+                themeToggle.checked = true;
+            }
+        };
+    </script>
+    {% endblock %}
 </body>
 </html>
