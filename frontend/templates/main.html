@@ -146,13 +146,6 @@
     {% endif %}
 {% endblock %}
 
-{% block navbar_items %}
-<div class="toggle-container">
-    <input type="checkbox" id="themeToggle">
-    <label for="themeToggle" class="toggle-switch"></label>
-</div>
-{% endblock %}
-
 {% block scripts %}
     {{ super() }}
     <script>
@@ -182,26 +175,5 @@
         }
 
         document.addEventListener('DOMContentLoaded', makeDraggable);
-    </script>
-    <script>
-        document.getElementById('themeToggle').addEventListener('change', function() {
-            document.body.classList.toggle('light-mode', this.checked);
-
-
-            if (this.checked) {
-                localStorage.setItem('theme', 'dark');
-            } else {
-                localStorage.setItem('theme', 'light');
-            }
-        });
-
-        window.onload = function() {
-            const savedTheme = localStorage.getItem('theme');
-            const themeToggle = document.getElementById('themeToggle');
-            if (savedTheme === 'light') {
-                document.body.classList.add('light-mode');
-                themeToggle.checked = true;
-            }
-        };
     </script>
 {% endblock %}

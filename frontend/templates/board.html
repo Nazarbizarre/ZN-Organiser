@@ -1,122 +1,121 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🖼️Board</title>
-</head>
+{% extends '__base.html' %} {% block title %}Board{% endblock %} {% block styles
+%} {{ super() }}
 <style>
-            /* Ensure body and html take up full height */
-            body, html {
-                margin: 0;
-                padding: 0;
-                height: 100%;
-                background-color: black;
-                align-items: center;
-                justify-content: center;
-                text-align: center;
-                display: inline-block;
-            }
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .theme-column {
+    background-color: #f0f0f0;
+    padding: 20px;
+    margin: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    width: 300px;
+  }
 
-            .container {
-                display: flex;
-            }
+  .theme-header {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
 
-            h1 {
-                text-align: center;
-                color: whitesmoke;
-                font-size: 70px;
-            }
-    
-            /* Make the div take up the whole height of the screen */
-            .container-child {
-                height: 60vh; /* 100% of the viewport height */
-                display: flex;
-                justify-content: top;
-                align-items: top;
-                text-align: top;
-                font-size: 24px;
-                width: 300px;
-                padding: 20px;
-                margin-left: 20px;
-                margin-right: 20px;
-                margin-top: 50px;
-                flex: 1;
-                border: 5px solid #4caf50;
+  .task-table {
+    border-collapse: collapse;
+    width: 100%;
+  }
 
-            }
-            /* Input field styling */
-    .container-child input[type="text"] {
-        width: 100%; /* Full width input */
-        padding: 10px; /* Space inside the input field */
-        border: 2px solid #4caf50; /* White border */
-        border-radius: 5px; /* Slightly rounded corners */
-        background-color: #333; /* Dark gray background for the input */
-        color: #fff; /* White text inside the input */
-        font-size: 1em; /* Standard font size */
-        height: 10%;
-        text-align: center;
+  .task-table th,
+  .task-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+  }
 
-}
+  .task-table th {
+    background-color: #f0f0f0;
+  }
 
-/* Input field focus state */
-    .container-child input[type="text"]:focus {
-        border-color: #4caf50; /* Blue border on focus */
-        outline: 1px #4caf50; /* Remove default outline */
-}
-textarea {
-    width: 80%; /* Full width input */
-    padding: 10px; /* Space inside the input field */
-    border: 2px solid #4caf50; /* White border */
-    border-radius: 5px; /* Slightly rounded corners */
-    background-color: #333; /* Dark gray background for the input */
-    color: #fff; /* White text inside the input */
-    font-size: 1em; /* Standard font size */
-    height: 5%;
-    text-align: center;
-    font-size: 40px;
-    overflow: hidden; /* Hide scrollbars */
-    box-sizing: content-box; /* Ensure padding/border are not included in width */
+  .light-mode {
+    background-color: #fff;
+    color: #333;
+  }
 
-}
-
-
-textarea:focus {
-    border-color: #4caf50; /* Blue border on focus */
-    outline: 1px #4caf50; /* Remove default outline */
-}
-
-    
-
+  .dark-mode {
+    background-color: #333;
+    color: #fff;
+  }
 </style>
-<body>
-    <h1>Board</h1>
-    <textarea id="Name" placeholder="Name of the Board"></textarea>
+{% endblock %} {% block content %}
 
+<h1>Board</h1>
 
-    <div class="container">
-        <div class="container-child"><input type="text" placeholder="Name of the Field"></div>
-        <div class="container-child"><input type="text" placeholder="Name of the Field"></div>
-        <div class="container-child"><input type="text" placeholder="Name of the Field"></div>
-    </div>
+<h2 id="Name">Tasks Sorted By Theme</h2>
 
-    <script>
-        //const textarea = document.getElementById('Name');
+{% if tasks %}
 
-        //function adjustWidth() {
-        //    const tempSpan = document.createElement('span');
-          //  tempSpan.style.visibility = 'hidden';
-            //tempSpan.style.whiteSpace = 'pre'; // Preserve spaces and line breaks
-            //tempSpan.style.fontSize = window.getComputedStyle(textarea).fontSize;
-            //tempSpan.textContent = textarea.value || textarea.placeholder;
-            //document.body.appendChild(tempSpan);
-            //const width = tempSpan.offsetWidth + 10; // Add some padding
-            //document.body.removeChild(tempSpan);
-            //textarea.style.width = width + 'px';
-        //}
+<div class="container">
+  <div class="theme-column">
+    <h4 class="theme-header">Геймс</h4>
+    <table class="task-table">
+      <tr>
+        <th>Title</th>
+        <th>Deadline</th>
+      </tr>
+      {% for task in tasks %} {% if task.theme == 'Games' %}
+      <tr>
+        <td><a href="/task/{{ task.id }}">{{ task.title }}</a></td>
+        <td>{{ task.deadline }}</td>
+      </tr>
+      {% endif %} {% endfor %}
+    </table>
+  </div>
+  <div class="theme-column">
+    <h4 class="theme-header">Хоббі</h4>
 
-        //textarea.addEventListener('input', adjustWidth);
-        //window.addEventListener('load', adjustWidth); // Initial adjustment for pre-filled content
-    </script>
-</body>
-</html>
+    <table class="task-table">
+      <tr>
+        <th>Title</th>
+
+        <th>Deadline</th>
+      </tr>
+
+      {% for task in tasks %} {% if task.theme == 'Hobby' %}
+
+      <tr>
+        <td><a href="/task/{{ task.id }}">{{ task.title }}</a></td>
+
+        <td>{{ task.deadline }}</td>
+      </tr>
+
+      {% endif %} {% endfor %}
+    </table>
+  </div>
+
+  <div class="theme-column">
+    <h4 class="theme-header">Спорт</h4>
+
+    <table class="task-table">
+      <tr>
+        <th>Title</th>
+
+        <th>Deadline</th>
+      </tr>
+
+      {% for task in tasks %} {% if task.theme == 'Sport' %}
+
+      <tr>
+        <td><a href="/task/{{ task.id }}">{{ task.title }}</a></td>
+
+        <td>{{ task.deadline }}</td>
+      </tr>
+
+      {% endif %} {% endfor %}
+    </table>
+  </div>
+</div>
+
+{% endif %} {% endblock %}

@@ -1,6 +1,6 @@
 from pydantic import BaseModel, ConfigDict
 from typing import Optional
-from datetime import date
+from datetime import datetime
 
 
 class TaskData(BaseModel):
@@ -9,7 +9,7 @@ class TaskData(BaseModel):
     author: str
     title: str
     content: str
-    published: str
+    published: Optional[str] = datetime.now().date().isoformat()
     deadline: str
     theme: str
     importance: str
@@ -18,9 +18,6 @@ class UserTasks(BaseModel):
     email: str
 
 
-class TaskEdit(BaseModel):
-    title: str
-    content: str
-    deadline: str
-    theme: str
-    importance: str
+# class TaskEdit(BaseModel):
+#     id: int
+#     user: str
