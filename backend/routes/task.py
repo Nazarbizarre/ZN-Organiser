@@ -4,6 +4,7 @@ from datetime import datetime
 from fastapi import HTTPException
 from ..db import Session, Task
 from ..schemas import TaskData, UserTasks
+from pydantic import BaseModel
 
 
 @app.get("/get_tasks")
@@ -28,6 +29,21 @@ def add_task(data: TaskData):
         task = Task(**data.model_dump())
         session.add(task)
         return task
+
+
+class DeleteTaskRequest(BaseModel):
+    id: int
+
+@app.delete("/delete_task")
+def delete_task(data: DeleteTaskRequest):
+    with Session.begin() as session:
+        task = session.get(Task, data.id)
+        if not task:
+            raise HTTPException(status_code=404, detail="Not found")
+        session.delete(task)
+        session.commit()
+        return {"message": "Task deleted successfully"}
+
 
 
 @app.put("/edit_task")
