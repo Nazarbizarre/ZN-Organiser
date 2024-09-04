@@ -1,78 +1,121 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🖼️Board</title>
-</head>
+{% extends '__base.html' %} {% block title %}Board{% endblock %} {% block styles
+%} {{ super() }}
 <style>
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .theme-column {
+    background-color: #f0f0f0;
+    padding: 20px;
+    margin: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    width: 300px;
+  }
 
-            body, html {
-                margin: 0;
-                padding: 0;
-                height: 100%;
-                background-color: black;
-                align-items: center;
-                justify-content: center;
-                text-align: center;
-                display: inline-block;
-            }
+  .theme-header {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
 
-            .container {
-                display: flex;
-            }
+  .task-table {
+    border-collapse: collapse;
+    width: 100%;
+  }
 
-            h1 {
-                text-align: center;
-                color: whitesmoke;
-                font-size: 70px;
-            }
-    
-            .container-child {
-                height: 60vh;
-                display: flex;
-                justify-content: top;
-                align-items: top;
-                text-align: top;
-                font-size: 24px;
-                width: 300px;
-                padding: 20px;
-                margin-left: 20px;
-                margin-right: 20px;
-                margin-top: 50px;
-                flex: 1;
-                border: 5px solid #4caf50;
+  .task-table th,
+  .task-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+  }
 
-            }
-            /* Input field styling */
-    .container-child input[type="text"] {
-        width: 100%;
-        padding: 10px;
-        border: 2px solid #4caf50;
-        border-radius: 5px;
-        background-color: #333;
-        color: #fff;
-        font-size: 1em;
-        height: 5%;
-        text-align: center;
+  .task-table th {
+    background-color: #f0f0f0;
+  }
 
-}
-    
+  .light-mode {
+    background-color: #fff;
+    color: #333;
+  }
 
+  .dark-mode {
+    background-color: #333;
+    color: #fff;
+  }
 </style>
-<body>
-    <h1>Board</h1>
-    <h2 id="Name">Tasks Sorted By Theme</h2>
+{% endblock %} {% block content %}
 
+<h1>Board</h1>
 
-    <div class="container">
-        <div class="container-child"><input type="text" placeholder="Name of the Field"></div>
-        <div class="container-child"><input type="text" placeholder="Name of the Field"></div>
-        <div class="container-child"><input type="text" placeholder="Name of the Field"></div>
-    </div>
+<h2 id="Name">Tasks Sorted By Theme</h2>
 
-    <script>
+{% if tasks %}
 
-    </script>
-</body>
-</html>
+<div class="container">
+  <div class="theme-column">
+    <h4 class="theme-header">Геймс</h4>
+    <table class="task-table">
+      <tr>
+        <th>Title</th>
+        <th>Deadline</th>
+      </tr>
+      {% for task in tasks %} {% if task.theme == 'Games' %}
+      <tr>
+        <td><a href="/task/{{ task.id }}">{{ task.title }}</a></td>
+        <td>{{ task.deadline }}</td>
+      </tr>
+      {% endif %} {% endfor %}
+    </table>
+  </div>
+  <div class="theme-column">
+    <h4 class="theme-header">Хоббі</h4>
+
+    <table class="task-table">
+      <tr>
+        <th>Title</th>
+
+        <th>Deadline</th>
+      </tr>
+
+      {% for task in tasks %} {% if task.theme == 'Hobby' %}
+
+      <tr>
+        <td><a href="/task/{{ task.id }}">{{ task.title }}</a></td>
+
+        <td>{{ task.deadline }}</td>
+      </tr>
+
+      {% endif %} {% endfor %}
+    </table>
+  </div>
+
+  <div class="theme-column">
+    <h4 class="theme-header">Спорт</h4>
+
+    <table class="task-table">
+      <tr>
+        <th>Title</th>
+
+        <th>Deadline</th>
+      </tr>
+
+      {% for task in tasks %} {% if task.theme == 'Sport' %}
+
+      <tr>
+        <td><a href="/task/{{ task.id }}">{{ task.title }}</a></td>
+
+        <td>{{ task.deadline }}</td>
+      </tr>
+
+      {% endif %} {% endfor %}
+    </table>
+  </div>
+</div>
+
+{% endif %} {% endblock %}

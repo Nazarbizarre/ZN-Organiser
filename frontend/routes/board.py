@@ -1,7 +1,8 @@
-from flask import render_template
+from flask import render_template, request
 from requests import get
 from flask_login import current_user, login_required
 from .. import app, BACKEND_URL
+from datetime import datetime
 
 @app.get("/board")
 @login_required
@@ -15,3 +16,4 @@ def board():
     }
     nickname = current.split("@")[0]
     return render_template("board.html", **tasks, nickname=nickname)
+
