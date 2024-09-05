@@ -4,4 +4,7 @@ from . import (default,
                info, 
                search,
                board,
-               edit)
+               edit,
+               delete,
+               done
+               )

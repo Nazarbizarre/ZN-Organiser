@@ -5,126 +5,178 @@
 
 {% block styles %}
     {{ super() }}
+
     <style>
-        body {
-            background-color: #121212;
-            transition: background-color 0.8s, color 0.8s;
-            color: #ffffff;
-            padding-top: 70px;
-        }
-
-        body.light-mode {
-            background-color: #ffffff;
-            color: #121212;
-        }
-
-
-        .toggle-container {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-        }
-        
-
-        #themeToggle {
-            display: none;
-        }
-        
-        .toggle-switch {
-            width: 60px;
-            height: 30px;
-            background-color: #ccc;
-            border-radius: 30px;
-            position: relative;
-            display: inline-block;
-            cursor: pointer;
-            transition: background-color 0.8s;
-        }
-        
-        .toggle-switch::before {
-            content: "";
-            position: absolute;
-            width: 26px;
-            height: 26px;
-            background-color: #121212;
-            border-radius: 50%;
-            top: 2px;
-            left: 2px;
-            transition: transform 0.8s;
-        }
-        
-        #themeToggle:checked + .toggle-switch {
-            background-color: #ffffff;
-        }
-        
-        #themeToggle:checked + .toggle-switch::before {
-            transform: translateX(30px);
-            background-color: #ccc;
-        }
-
-        
-        .form-control {
-            background-color: #333333;
-            border: none;
-            color: #ffffff;
-        }
-        .form-control:focus {
-            background-color: #444444;
-        }
-        .btn-outline-success {
-            color: #ffffff;
-            border-color: #4caf50;
-        }
-        .btn-outline-success:hover {
-            background-color: #4caf50;
-            color: #ffffff;
-        }
-        .card {
-            background-color: #333333;
-            border: none;
-            color: #ffffff;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-            width: 320px;
-            position: absolute;
-        }
-        .card:hover {
-            transform: scale(1.05);
-        }
-        .card-title {
-            color: #4caf50;
-            font-size: 1.5rem;
-        }
-        .card-text {
-            color: #b8b8b8;
-        }
-        .badge-primary {
-            background-color: #4caf50;
-            color: #ffffff;
-            font-size: 1rem;
-            padding: 0.5rem 1rem;
-            border-radius: 0.25rem;
-        }
-        .parent {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-            padding: 20px;
-        }
-        .objects {
-            max-width: 300px;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-            position: absolute;
-        }
-        .objects:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        }
-    </style>
+            body {
+                background-color: #121212;
+                transition: background-color 0.8s, color 0.8s;
+                color: #ffffff;
+                padding-top: 70px;
+            }
+    
+            body.light-mode {
+                background-color: #ffffff;
+                color: #121212;
+            }
+    
+    
+            .toggle-container {
+                position: absolute;
+                top: 20px;
+                right: 20px;
+            }
+            
+    
+            #themeToggle {
+                display: none;
+            }
+            
+            .toggle-switch {
+                width: 60px;
+                height: 30px;
+                background-color: #ccc;
+                border-radius: 30px;
+                position: relative;
+                display: inline-block;
+                cursor: pointer;
+                transition: background-color 0.8s;
+            }
+            
+            .toggle-switch::before {
+                content: "";
+                position: absolute;
+                width: 26px;
+                height: 26px;
+                background-color: #121212;
+                border-radius: 50%;
+                top: 2px;
+                left: 2px;
+                transition: transform 0.8s;
+            }
+            
+            #themeToggle:checked + .toggle-switch {
+                background-color: #ffffff;
+            }
+            
+            #themeToggle:checked + .toggle-switch::before {
+                transform: translateX(30px);
+                background-color: #ccc;
+            }
+    
+            
+            .form-control {
+                background-color: #333333;
+                border: none;
+                color: #ffffff;
+            }
+            .form-control:focus {
+                background-color: #444444;
+            }
+            .btn-outline-success {
+                color: #ffffff;
+                border-color: #4caf50;
+            }
+            .btn-outline-success:hover {
+                background-color: #4caf50;
+                color: #ffffff;
+            }
+            .card {
+                background-color: #333333;
+                border: none;
+                color: #ffffff;
+                cursor: pointer;
+                transition: transform 0.3s ease height 0.3s ease;
+                width: 320px;
+                height: 110px;
+                overflow: hidden;
+                position: absolute;
+            }
+            .card .btn-done {
+                visibility: hidden;
+                display: inline-block;
+                opacity: 0;
+                transition: opacity 1s ease;
+                margin-top: 20px;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 5px;
+                background-color: #81c784; /* Green button */
+                color: #1a1a1a;  /* Dark background for contrast */
+                cursor: pointer;
+                position: absolute;
+                bottom: 10px;
+                left: 50%;
+                transform: translateX(-50%);  /* Center the button horizontally */
+                text-decoration: none;
+                font-weight: bold;
+                transition: background-color 0.3s;
+                text-align: center;
+                width:90%;
+            }
+            
+            .card:hover {
+                transform: scale(1.05);
+                transition: 1.5s ease;
+                height: 160px;
+            }
+    
+    
+            .card:hover .btn-done {
+                visibility: visible;
+                opacity: 1;
+            }
+            .card-title {
+                color: #4caf50;
+                font-size: 1.5rem;
+            }
+            .card-text {
+                color: #b8b8b8;
+            }
+            .badge-primary {
+                background-color: #4caf50;
+                color: #ffffff;
+                font-size: 1rem;
+                padding: 0.5rem 1rem;
+                border-radius: 0.25rem;
+            }
+            .parent {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 20px;
+                padding: 20px;
+            }
+            .objects {
+                max-width: 300px;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                transition: transform 0.3s ease;
+                position: absolute;
+            }
+            .objects:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            }
+            .btn {
+                display: inline-block;
+                padding: 10px 20px;
+                margin-top: 20px;
+                background-color: #81c784;
+                color: #1a1a1a;
+                text-decoration: none;
+                font-weight: bold;
+                border-radius: 5px;
+                transition: background-color 0.3s;
+                text-align: center;
+                width:100%;
+            }
+            .btn:hover {
+                background-color: lightgreen;
+                color: black;
+            }
+            
+        </style>
 {% endblock %}
 
 {% block content %}
@@ -137,6 +189,7 @@
                             <div class="card-body">
                                 <h2 class="card-title" style="color: {{ task.importance }};">{{ task.title }}</h2>
                                 <h3 class="card-text"><span class="badge badge-primary"  style="background-color: {{ task.importance }};">{{ task.deadline }}</span></h3>
+                                <a class="btn-done" href="{{ url_for('done', task_id=task.id) }}">Done</a>
                             </div>
                         </div>
                     </a>
