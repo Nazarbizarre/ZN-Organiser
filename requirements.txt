@@ -1,7 +1,0 @@
-flask
-flask-login
-flask-WTF
-sqlalchemy
-fastapi
-python-dotenv
-requests
