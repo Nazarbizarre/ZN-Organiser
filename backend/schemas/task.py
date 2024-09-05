@@ -21,3 +21,7 @@ class UserTasks(BaseModel):
 class DeleteTaskRequest(BaseModel):
     id: int
     user: str
+
+class TaskTheme(BaseModel):
+    email: str
+    theme: str

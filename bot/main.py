@@ -96,6 +96,43 @@ async def all_tasks(event):
         await event.respond("Please log in first.")
 
 
+@client.on(events.CallbackQuery(pattern=b'themes'))
+async def themes(event):
+    await event.respond("Choose theme: ", buttons=inline.themes)
+
+@client.on(events.CallbackQuery(pattern=b'theme_.*'))
+async def all_tasks_by_theme(event):
+    user_id = event.sender_id
+    user_state = user_states.get(user_id)
+    email = user_state.get('email')
+    theme = event.data.split(b'_')[1]
+    
+    data = {
+        "email": email,
+        "theme": theme.decode()
+    }
+
+    response = get(f"{BACKEND_URL}/themes", json=data)
+    if response.status_code == 200:
+        tasks = response.json()
+        theme = event.data.split(b'_')[1].decode()
+        if not tasks:
+            message = f"Selected theme: {theme}\n\nNo tasks available for this theme."
+        else:
+            message = f"Selected theme: {theme}\n\n"
+            for task in tasks:
+                title = task.get('title')
+                content = task.get('content')
+                published = task.get('published')
+                deadline = task.get('deadline')
+                message += (f"""Title: {title}\n
+Content: {content}
+Published: {published}
+Deadline: {deadline}\n\n""")
+        await event.respond(message)
+    else:
+        await event.respond(f"Error {response.status_code}")
+
 
 async def main():
     await client.start()

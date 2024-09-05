@@ -1,9 +1,9 @@
 from ..main import app
-from sqlalchemy import select, update
+from sqlalchemy import select, update, and_
 from datetime import datetime
 from fastapi import HTTPException
 from ..db import Session, Task
-from ..schemas import TaskData, UserTasks, DeleteTaskRequest
+from ..schemas import TaskData, UserTasks, DeleteTaskRequest, TaskTheme
 
 
 
@@ -59,3 +59,11 @@ def edit_task(data: TaskData):
         )
         session.execute(upd)
         return task
+    
+
+@app.get("/themes")
+def themes(data: TaskTheme):
+    with Session.begin() as session:
+        selected_tasks = session.scalars(select(Task).where(and_(Task.theme == data.theme), Task.author == data.email)).all()
+        selected_tasks = [TaskData.model_validate(task) for task in selected_tasks]
+        return selected_tasks
