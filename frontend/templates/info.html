@@ -1,60 +1,81 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{task.title}}</title>
-</head>
-<body>
+{% extends '__base.html' %}
+
+{% block title %}Task {{ task.title }} Description{% endblock %}
+
+{% block styles %}
+    {{ super() }}
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            line-height: 1.6;
+            background-color: #1a1a1a;
+            color: #dcdcdc;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
         }
-        
-        /* Title Styles */
-        h1 {
-            font-size: 2em;
-            color: #333;
-            margin-bottom: 10px;
+
+        .task-page {
+            max-width: 800px;
+            margin: 150px auto; /* Adjusted margin-top for spacing */
+            padding: 20px;
+            background: #2a2a2a;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
         }
-        
-        /* Table Styles */
-        table {
-            width: 100%;
-            border-collapse: collapse;
+
+        .task-page h1 {
+            color: #90caf9; /* Softer blue color */
+            font-size: 2.3em;
+            text-align: center;
             margin-bottom: 20px;
         }
-        
-        td {
-            padding: 10px;
-            border: 1px solid #ddd;
+
+        .task-container {
+            background: #333;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
         }
-        
-        /* Horizontal Line Styles */
-        hr {
-            border: none;
-            height: 1px;
-            background-color: #333; /* Change the color as needed */
-            margin: 20px 0;
+
+        .task-container h2 {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            color: #a5d6a7; /* Soft green color */
         }
-        
-        /* Content Title Styles */
-        h2 {
-            font-size: 1.5em;
-            color: #555;
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
             margin-top: 20px;
+            background-color: #81c784; /* Muted green color */
+            color: #1a1a1a;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #66bb6a; /* Slightly darker green for hover */
+        }
+
+        .task-page a.btn {
+            text-align: center;
+            width: 100%;
         }
     </style>
-    <h1>Title - {{ task.title }}</h1>
-    <table>
-        <tr>
-            <td>Published on - {{task.published}}</td>
-            <td>Deadline - {{task.deadline}}</td>
-        </tr>
-    </table>
-    <hr>
-    <h2>Content - {{ task.content }}</h2>
-</body>
-</html>
+{% endblock %}
+
+{% block content %}
+    <div class="task-page">
+        <h1>{{ task.title }}</h1>
+        <div class="task-container">
+            <h2>Content - {{ task.content }}</h2>
+            <h2>Deadline - {{ task.deadline }}</h2>
+            <h2>Theme - {{ task.theme }}</h2>
+            <h2>Published at - {{ task.published }}</h2>
+            <a class="btn" href="/">Home</a>
+            <a class="btn" href="/edit_task/{{ product_id }}">Edit</a>
+
+        </div>
+    </div>
+{% endblock %}

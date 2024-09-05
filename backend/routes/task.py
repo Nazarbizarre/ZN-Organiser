@@ -1,11 +1,12 @@
-from main import app
-from sqlalchemy import select
+from ..main import app
+from sqlalchemy import select, update
 from datetime import datetime
 from db import Session, Task
 from schemas import TaskData
+from fastapi import HTTPException
+from ..db import Session, Task
+from ..schemas import TaskData, UserTasks
 
-
-# from fastapi.exceptions import HTTPException
 
 @app.get("/get_tasks")
 def get_tasks():
@@ -28,4 +29,21 @@ def add_task(data: TaskData):
     with Session.begin() as session:
         task = Task(**data.model_dump())
         session.add(task)
+        return task
+
+
+@app.put("/edit_task")
+def edit_task(data: TaskData):
+    with Session.begin() as session:
+        task = session.scalar(select(Task).where(Task.id == data.id))
+        if task.author != data.author:
+            raise HTTPException(status_code=403, detail="Permission denied")
+        upd = update(Task).where(Task.id == data.id).values(
+            title=data.title,
+            content=data.content,
+            deadline=data.deadline,
+            theme=data.theme,
+            importance=data.importance
+        )
+        session.execute(upd)
         return task
