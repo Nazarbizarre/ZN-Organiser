@@ -4,3 +4,4 @@ flask-WTF
 sqlalchemy
 python-dotenv
 requests
+telethon

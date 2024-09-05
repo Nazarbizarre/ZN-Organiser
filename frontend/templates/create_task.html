@@ -51,11 +51,14 @@
             gap: 0.5rem;
         }
         .gradient-container {
-            width: 600px;
+            width: 100%;
+            max-width: 600px;
             height: 100px;
             position: relative;
             background: linear-gradient(to right, red, yellow, green);
             margin-bottom: 20px;
+            border-radius: 8px; 
+            overflow: hidden;
         }
 
         .dragger {
@@ -66,18 +69,19 @@
             background-color: #ffffff;
             border: 2px solid #000;
             cursor: pointer;
+            pointer-events: none;
         }
 
         #colorValue {
             font-weight: bold;
         }
-        
+
         .mb-3 {
             margin-top: 30px;
         }
-
     </style>
 {% endblock %}
+
 
 {% block content %}
     <div class="container">
@@ -178,8 +182,9 @@ function updateDraggerPosition(event) {
     let x = event.clientX - rect.left;
     let y = event.clientY - rect.top;
 
-    x = Math.max(0, Math.min(x, gradientContainer.clientWidth));
-    y = Math.max(0, Math.min(y, gradientContainer.clientHeight));
+
+    x = Math.max(0, Math.min(x, gradientContainer.clientWidth - dragger.clientWidth / 2));
+    y = Math.max(0, Math.min(y, gradientContainer.clientHeight - dragger.clientHeight / 2));
 
     dragger.style.left = `${x}px`;
     dragger.style.top = `${y}px`;
@@ -187,8 +192,9 @@ function updateDraggerPosition(event) {
     const color = getColorAtPoint(x, y);
     colorValue.textContent = color;
     dragger.style.backgroundColor = color;
-    selectedColorInput.value = color;  // Correctly update the hidden input value
+    selectedColorInput.value = color;
 }
+
 
 gradientContainer.addEventListener('mousedown', (event) => {
     updateDraggerPosition(event);

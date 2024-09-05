@@ -18,6 +18,5 @@ class UserTasks(BaseModel):
     email: str
 
 
-# class TaskEdit(BaseModel):
-#     id: int
-#     user: str
+class DeleteTaskRequest(BaseModel):
+    id: int
