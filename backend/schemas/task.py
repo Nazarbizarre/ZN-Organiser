@@ -20,3 +20,4 @@ class UserTasks(BaseModel):
 
 class DeleteTaskRequest(BaseModel):
     id: int
+    user: str

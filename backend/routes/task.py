@@ -34,9 +34,11 @@ def add_task(data: TaskData):
 @app.delete("/delete_task")
 def delete_task(data: DeleteTaskRequest):
     with Session.begin() as session:
-        task = session.get(Task, data.id)
+        task = session.scalar(select(Task).where(Task.id == data.id))
         if not task:
             raise HTTPException(status_code=404, detail="Not found")
+        if task.author != data.user:
+            raise HTTPException(status_code=403, detail="Permission denied")
         session.delete(task)
         return {"message": "Task deleted successfully"}
 
