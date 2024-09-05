@@ -5,5 +5,6 @@ from . import (default,
                search,
                board,
                edit,
-               delete
+               delete,
+               done
                )
