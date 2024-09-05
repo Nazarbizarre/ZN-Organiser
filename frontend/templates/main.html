@@ -155,7 +155,7 @@
                             <div class="card-body">
                                 <h2 class="card-title" style="color: {{ task.importance }};">{{ task.title }}</h2>
                                 <h3 class="card-text"><span class="badge badge-primary"  style="background-color: {{ task.importance }};">{{ task.deadline }}</span></h3>
-                                <a class="btn" href="/done/{{ product_id }}">Done</a>
+                                <a class="btn" href="{{ url_for('done', task_id=task.id) }}">Done</a>
                             </div>
                         </div>
                     </a>
