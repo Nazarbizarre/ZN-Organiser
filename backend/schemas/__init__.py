@@ -1,1 +1,1 @@
-from .task import TaskData, UserTasks
+from .task import TaskData, UserTasks, DeleteTaskRequest

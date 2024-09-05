@@ -3,8 +3,8 @@ from sqlalchemy import select, update
 from datetime import datetime
 from fastapi import HTTPException
 from ..db import Session, Task
-from ..schemas import TaskData, UserTasks
-from pydantic import BaseModel
+from ..schemas import TaskData, UserTasks, DeleteTaskRequest
+
 
 
 @app.get("/get_tasks")
@@ -31,9 +31,6 @@ def add_task(data: TaskData):
         return task
 
 
-class DeleteTaskRequest(BaseModel):
-    id: int
-
 @app.delete("/delete_task")
 def delete_task(data: DeleteTaskRequest):
     with Session.begin() as session:
@@ -41,7 +38,6 @@ def delete_task(data: DeleteTaskRequest):
         if not task:
             raise HTTPException(status_code=404, detail="Not found")
         session.delete(task)
-        session.commit()
         return {"message": "Task deleted successfully"}
 
 
