@@ -5,7 +5,8 @@ from db import Session, Task
 from schemas import TaskData
 from fastapi import HTTPException
 from ..db import Session, Task
-from ..schemas import TaskData, UserTasks
+from ..schemas import TaskData, UserTasks, DeleteTaskRequest
+
 
 
 @app.get("/get_tasks")
@@ -30,6 +31,19 @@ def add_task(data: TaskData):
         task = Task(**data.model_dump())
         session.add(task)
         return task
+
+
+@app.delete("/delete_task")
+def delete_task(data: DeleteTaskRequest):
+    with Session.begin() as session:
+        task = session.scalar(select(Task).where(Task.id == data.id))
+        if not task:
+            raise HTTPException(status_code=404, detail="Not found")
+        if task.author != data.user:
+            raise HTTPException(status_code=403, detail="Permission denied")
+        session.delete(task)
+        return {"message": "Task deleted successfully"}
+
 
 
 @app.put("/edit_task")
