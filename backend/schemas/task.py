@@ -13,11 +13,17 @@ class TaskData(BaseModel):
     deadline: str
     theme: str
     importance: str
+    completed: bool
 
 class UserTasks(BaseModel):
     email: str
+    completed: bool
 
 
-class DeleteTaskRequest(BaseModel):
+class TaskGetRequest(BaseModel):
     id: int
     user: str
+
+class TaskTheme(BaseModel):
+    email: str
+    theme: str
