@@ -27,3 +27,9 @@ class TaskGetRequest(BaseModel):
 class TaskTheme(BaseModel):
     email: str
     theme: str
+
+
+class FilterData(BaseModel):
+    email: str
+    start_date: datetime
+    end_date: datetime

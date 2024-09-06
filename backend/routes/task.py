@@ -3,7 +3,7 @@ from sqlalchemy import select, update, and_
 from datetime import datetime
 from fastapi import HTTPException
 from ..db import Session, Task
-from ..schemas import TaskData, UserTasks, TaskGetRequest, TaskTheme
+from ..schemas import TaskData, UserTasks, TaskGetRequest, TaskTheme, FilterData
 
 
 
@@ -81,3 +81,13 @@ def themes(data: TaskTheme):
         selected_tasks = session.scalars(select(Task).where(and_(Task.theme == data.theme), Task.author == data.email)).all()
         selected_tasks = [TaskData.model_validate(task) for task in selected_tasks]
         return selected_tasks
+    
+
+@app.get('/filters')
+def filters(data: FilterData):
+    with Session.begin() as session:
+        start_date = data.start_date
+        end_date = data.end_date
+        filtered = session.query(Task).where(and_(Task.author == data.email), Task.deadline.between(start_date, end_date))
+        filtered = [TaskData.model_validate(task) for task in filtered]
+        return filtered

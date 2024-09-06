@@ -1,3 +1,5 @@
+from os import getenv
+from datetime import datetime 
 from telethon import TelegramClient, events
 from sqlalchemy import select
 from flask_login import login_user
@@ -5,14 +7,16 @@ from frontend.db import User, Session
 from .keyboards import inline
 from requests import get
 
-api_hash = "460dbd52a66709679d8d65950720fe22"
-api_id = "29195129"
-bot_token = '7015782041:AAEBUp1JAx592RrIE517EbKIqucUUaGBznU'
-BACKEND_URL = "http://127.0.0.1:8000"
+API_ID = getenv("API_ID")
+API_HASH = getenv("API_HASH")
+BOT_TOKEN = getenv("BOT_TOKEN")
+BACKEND_URL = getenv("BACKEND_URL")
 
-client = TelegramClient('bot', api_id, api_hash).start(bot_token=bot_token)
+
+client = TelegramClient('bot', API_ID, API_HASH).start(bot_token=BOT_TOKEN)
 
 user_states = {}
+
 
 @client.on(events.NewMessage(pattern='/start'))
 async def start_message(event):
@@ -132,6 +136,87 @@ Deadline: {deadline}\n\n""")
         await event.respond(message)
     else:
         await event.respond(f"Error {response.status_code}")
+
+
+user_data = {}
+
+def is_valid_date(date_str):
+    try:
+        datetime.strptime(date_str, "%Y-%m-%d")
+        return True
+    except ValueError:
+        return False
+
+@client.on(events.CallbackQuery(pattern=b'filter'))
+async def filter_by_date(event):
+    user_id = event.sender_id
+    if user_id not in user_data:
+        user_data[user_id] = {'step': 'start_date'}
+    
+    await event.respond("Enter start date (yyyy-mm-dd):")
+
+@client.on(events.NewMessage)
+async def handle_filter_message(event):
+    user_id = event.sender_id
+    
+    data = user_data.get(user_id)
+    if data:
+        step = data.get('step')
+        date_text = event.text
+        
+        if not is_valid_date(date_text):
+            await event.respond("Invalid date format. Please use yyyy-mm-dd.")
+            return
+
+        match step:
+            case 'start_date':
+                data['start_date'] = date_text
+                data['step'] = 'end_date'
+                await event.respond("Enter end date (yyyy-mm-dd):")
+            
+            case 'end_date':
+                start_date = data.get('start_date')
+                end_date = date_text
+
+                if start_date is None:
+                    await event.respond("Start date not set. Please start over.")
+                    return
+
+                if datetime.strptime(end_date, "%Y-%m-%d") < datetime.strptime(start_date, "%Y-%m-%d"):
+                    await event.respond("End date cannot be earlier than start date.")
+                    return
+
+                data['end_date'] = end_date
+                del user_data[user_id]
+                
+                message = f"Filtering tasks from {start_date} to {end_date}"
+                
+                user_state = user_states.get(user_id)
+                email = user_state.get('email') if user_state else None
+
+                data = {
+                    "email": email,
+                    "start_date": start_date,
+                    "end_date": end_date
+                }
+                response = get(f'{BACKEND_URL}/filters', json=data).json()
+
+                if isinstance(response, list) and response:
+                    for item in response:
+                        title = item.get('title', 'No Title')
+                        content = item.get('content', 'No Content')
+                        published = item.get('published', 'No Published Date')
+                        deadline = item.get('deadline', 'No Deadline')
+
+                        message += (
+                            f"""\n<b>Title:</b> {title}\n\n
+Content: {content}
+Published: {published}
+Deadline: {deadline}""")
+                    await event.respond(message, parse_mode='html')
+                else:
+                    await event.respond("No tasks found or unexpected response format.")
+
 
 
 async def main():
