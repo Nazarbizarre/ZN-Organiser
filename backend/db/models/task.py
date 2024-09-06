@@ -13,3 +13,4 @@ class Task(Base):
     deadline: Mapped[str]
     theme: Mapped[str]
     importance: Mapped[str]
+    completed: Mapped[bool]

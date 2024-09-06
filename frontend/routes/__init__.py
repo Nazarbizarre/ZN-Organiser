@@ -6,5 +6,6 @@ from . import (default,
                board,
                edit,
                delete,
-               done
+               done,
+               completed
                )
