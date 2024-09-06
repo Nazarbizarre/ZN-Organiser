@@ -18,4 +18,4 @@ def completed():
         "tasks":get(f"{BACKEND_URL}/get_tasks", json=data).json()
     }
     nickname = current.split("@")[0]
-    return render_template("main.html", **tasks, nickname=nickname)
+    return render_template("completed.html", **tasks, nickname=nickname)
