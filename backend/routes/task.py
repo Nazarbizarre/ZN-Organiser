@@ -58,7 +58,7 @@ def edit_task(data: TaskData):
             importance=data.importance,
             completed=False
         )
-        session.execute(upd)
+        session.execute(upd)# САЛАМ
         return task
     
 @app.post("/task_done")
@@ -83,7 +83,7 @@ def themes(data: TaskTheme):
         return selected_tasks
     
 
-@app.get('/filters')
+@app.get('/calendar')
 def filters(data: FilterData):
     with Session.begin() as session:
         start_date = data.start_date

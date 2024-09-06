@@ -1,0 +1,62 @@
+
+{% extends '__base.html' %}
+
+{% block title %}Calendar{% endblock %}
+
+{% block styles %}
+    {{ super() }}
+
+    <style>
+
+    </style>
+{% endblock %}
+
+      {% if filtered_tasks %}
+      <table id="calendar">
+        <thead>
+          <tr>
+            <th>Task</th>
+            <th>Deadline</th>
+          </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+      </table>
+      {% endif %}
+
+
+
+    
+{% block content %}
+
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script>
+    function addRows() {
+      const tableBody = document.querySelector('#calendar tbody');
+      
+
+      for (let task of filtered_tasks) {
+
+          let newRow = tableBody.insertRow();
+
+
+          let cell1 = newRow.insertCell(0);
+          let cell2 = newRow.insertCell(1);
+
+
+          cell1.textContent =  task.title ;
+          cell2.textContent = task.deadline ;
+      }
+  }
+
+
+  document.addEventListener('DOMContentLoaded', () => {
+    addRows(filtered_tasks);
+  });
+
+</script>
+{% endblock %}

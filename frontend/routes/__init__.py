@@ -7,5 +7,6 @@ from . import (default,
                edit,
                delete,
                done,
-               completed
+               completed,
+               calendar
                )

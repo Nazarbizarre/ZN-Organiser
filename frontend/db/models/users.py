@@ -7,6 +7,7 @@ class User(Base):
     nickname: Mapped[str]
     email: Mapped[str]
     password: Mapped[str]
+    # reminder_time: Mapped[str]
 
 
     def is_active(self) -> bool:

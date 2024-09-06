@@ -1,11 +1,15 @@
 from os import getenv
 from datetime import datetime 
+from datetime import timedelta, datetime
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from apscheduler.triggers.cron import CronTrigger
 from telethon import TelegramClient, events
 from sqlalchemy import select
 from flask_login import login_user
 from frontend.db import User, Session
-from .keyboards import inline
 from requests import get
+from .keyboards import inline
+
 
 API_ID = getenv("API_ID")
 API_HASH = getenv("API_HASH")
@@ -14,6 +18,7 @@ BACKEND_URL = getenv("BACKEND_URL")
 
 
 client = TelegramClient('bot', API_ID, API_HASH).start(bot_token=BOT_TOKEN)
+scheduler = AsyncIOScheduler()
 
 user_states = {}
 
@@ -219,9 +224,76 @@ Deadline: {deadline}""")
 
 
 
-async def main():
-    await client.start()
-    await client.run_until_disconnected()
+@client.on(events.NewMessage(pattern='/set_time'))
+async def set_time(event):
+    user_input = event.text.split()
+    if len(user_input) == 2:
+        time_parts = user_input[1].split(':')
+        if len(time_parts) == 2 and time_parts[0].isdigit() and time_parts[1].isdigit():
+            hours = int(time_parts[0])
+            minutes = int(time_parts[1])
 
-if __name__ == "__main__":
-    client.loop.run_until_complete(main())
+            hours = (hours - 0) % 24
+
+            if 0 <= hours < 24 and 0 <= minutes < 60:
+                user_id = event.sender_id
+                reminder_time = f'{hours:02d}:{minutes:02d}'
+
+                with Session.begin() as session:
+                    user = session.query(User).filter(User.id == user_id).first()
+                    if user:
+                        user.reminder_time = reminder_time
+
+
+                job_id = f'reminder_{user_id}'
+                if scheduler.get_job(job_id):
+                    scheduler.remove_job(job_id)
+
+                scheduler.add_job(
+                    send_user_reminder,
+                    CronTrigger(hour=hours, minute=minutes),
+                    args=[user_id],
+                    id=job_id
+                )
+
+                await event.respond(f'The reminder time is set correctly')
+            else:
+                await event.respond("Incorrect time. Make sure the hours are between 0 and 23 and the minutes are between 0 and 59")
+        else:
+            await event.respond("Enter the time in HH:MM format, for example /set_time 14:30")
+    else:
+        await event.respond("Enter command just /set_time HH:MM, for example /set_time 14:30")
+
+
+async def send_user_reminder(user_id):
+    now = datetime.now().date()
+    previous_day = now - timedelta(days=1)
+
+    with Session.begin() as session:
+        user = session.scalar(select(User).where(User.id == user_id))
+        if user:
+            email = user.email
+            tasks = get_tasks(email)
+
+            if tasks:
+                missed_tasks = [task for task in tasks if datetime.strptime(task.get('deadline'), '%Y-%m-%d').date() == previous_day]
+                if missed_tasks:
+                    await client.send_message(user_id, f'You have missed tasks for {previous_day}.')
+                else:
+                    await client.send_message(user_id, "Just a reminder, you have pending tasks!")
+
+
+def get_missed_tasks(email: str, previous_day: datetime):
+    tasks = get_tasks(email)
+    if tasks:
+        return [task for task in tasks if datetime.strptime(task.get('deadline'), '%Y-%m-%d').date() == previous_day]
+    return []
+
+
+def start_scheduler():
+    scheduler.start()
+
+
+if __name__ == '__main__':
+    start_scheduler()
+    client.run_until_disconnected()
