@@ -85,49 +85,15 @@
                 border: none;
                 color: #ffffff;
                 cursor: pointer;
-                transition: transform 0.3s ease height 0.3s ease;
+                transition: transform 0.3s ease, height 0.3s ease;
                 width: 320px;
                 height: 110px;
                 overflow: hidden;
-                position: absolute;
-            }
-            .card .btn-done {
-                visibility: hidden;
-                display: inline-block;
-                opacity: 0;
-                transition: opacity 1s ease;
-                margin-top: 20px;
-                padding: 10px 20px;
-                border: none;
-                border-radius: 5px;
-                background-color: #81c784; /* Green button */
-                color: #1a1a1a;  /* Dark background for contrast */
-                cursor: pointer;
-                position: absolute;
-                bottom: 10px;
-                left: 50%;
-                transform: translateX(-50%);  /* Center the button horizontally */
-                text-decoration: none;
-                font-weight: bold;
-                transition: background-color 0.3s;
-                text-align: center;
-                width:90%;
-            }
-            
-            .card:hover {
-                transform: scale(1.05);
-                transition: 1.5s ease;
-                height: 160px;
-            }
-    
-    
-            .card:hover .btn-done {
-                visibility: visible;
-                opacity: 1;
             }
             .card-title {
                 color: #4caf50;
                 font-size: 1.5rem;
+                text-decoration: none;
             }
             .card-text {
                 color: #b8b8b8;
@@ -141,9 +107,9 @@
             }
             .parent {
                 display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 20px;
+                flex-direction: column;
+                align-items:start;
+                gap: 0px;
                 padding: 20px;
             }
             .objects {
@@ -152,11 +118,6 @@
                 border-radius: 10px;
                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
                 transition: transform 0.3s ease;
-                position: absolute;
-            }
-            .objects:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
             }
             .btn {
                 display: inline-block;
@@ -183,13 +144,12 @@
     {% if tasks %}
         <div class="parent">
             {% for task in tasks %}
-                <div class="objects" draggable="true">
+                <div class="objects">
                     <a href="/task/{{ task.id }}">
                         <div class="card">
                             <div class="card-body">
                                 <h2 class="card-title" style="color: {{ task.importance }};">{{ task.title }}</h2>
                                 <h3 class="card-text"><span class="badge badge-primary"  style="background-color: {{ task.importance }};">{{ task.deadline }}</span></h3>
-                                <a class="btn-done" href="{{ url_for('done', task_id=task.id) }}">Done</a>
                             </div>
                         </div>
                     </a>
@@ -201,32 +161,4 @@
 
 {% block scripts %}
     {{ super() }}
-    <script>
-        function makeDraggable() {
-            const objects = document.querySelectorAll('.objects');
-            objects.forEach(object => {
-                object.draggable = true;
-                object.addEventListener('dragstart', dragStart);
-                object.addEventListener('dragend', dragEnd);
-            });
-        }
-
-        let dragStartX, dragStartY;
-
-        function dragStart(e) {
-            dragStartX = e.clientX - this.getBoundingClientRect().left;
-            dragStartY = e.clientY - this.getBoundingClientRect().top;
-            e.dataTransfer.setDragImage(this, dragStartX, dragStartY);
-            this.style.opacity = '0.5';
-        }
-
-        function dragEnd(e) {
-            this.style.opacity = '1';
-            this.style.left = `${e.clientX - dragStartX}px`;
-            this.style.top = `${e.clientY - dragStartY}px`;
-            this.style.transition = 'left 0.5s ease, top 0.5s ease';
-        }
-
-        document.addEventListener('DOMContentLoaded', makeDraggable);
-    </script>
 {% endblock %}

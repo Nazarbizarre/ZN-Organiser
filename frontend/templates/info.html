@@ -142,10 +142,15 @@
             <h2>Deadline - {{ task.deadline }}</h2>
             <h2>Theme - {{ task.theme }}</h2>
             <h2>Published at - {{ task.published }}</h2>
-            <a class="btn-home" id="home" href="/">Home</a>
-            <a class="btn-edit" id="edit" href="/edit_task/{{ product_id }}">Edit</a>
-            <a class="btn-delete" id="delete" href="/delete_task/{{ product_id }}">Delete</a>
-            <a class="btn-done" id="done" href="/done/{{ product_id }}">Done</a>
+            {% if task.completed == False %}
+                <a class="btn-home" id="home" href="/">Home</a>
+                <a class="btn-edit" id="edit" href="/edit_task/{{ product_id }}">Edit</a>
+                <a class="btn-delete" id="delete" href="/delete_task/{{ product_id }}">Delete</a>
+                <a class="btn-done" id="done" href="/done/{{ product_id }}">Done</a>
+            {% else %} 
+                <a class="btn-home" id="home" href="/completed_tasks">Home</a>   
+                <a class="btn-delete" id="delete" href="/delete_task/{{ product_id }}">Delete</a>
+            {% endif %}
 
         </div>
     </div>
