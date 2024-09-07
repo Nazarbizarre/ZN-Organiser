@@ -7,7 +7,7 @@ class User(Base):
     nickname: Mapped[str]
     email: Mapped[str]
     password: Mapped[str]
-    # reminder_time: Mapped[str]
+    reminder_time: Mapped[str] = mapped_column(default="15:00")
 
 
     def is_active(self) -> bool:

@@ -6,6 +6,14 @@ from ..db import Session, Task
 from ..schemas import TaskData, UserTasks, TaskGetRequest, TaskTheme, FilterData
 
 
+@app.get("/get_tasks_bot")
+def get_tasks_bot(data: UserTasks):
+    with Session.begin() as session:
+        tasks = session.scalars(select(Task).where(Task.author == data.email)).all()
+        tasks = [TaskData.model_validate(task) for task in tasks]
+        return tasks
+
+
 
 @app.get("/get_tasks")
 def get_tasks(data: UserTasks):
@@ -83,7 +91,10 @@ def themes(data: TaskTheme):
         return selected_tasks
     
 
-@app.get('/calendar')
+
+    
+
+@app.get('/filters')
 def filters(data: FilterData):
     with Session.begin() as session:
         start_date = data.start_date

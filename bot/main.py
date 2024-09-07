@@ -86,7 +86,7 @@ def get_tasks(email: str):
     data = {
         "email": email
     }
-    response = get(f"{BACKEND_URL}/get_tasks", json=data)
+    response = get(f"{BACKEND_URL}/get_tasks_bot", json=data)
     if response.status_code == 200:
         tasks = response.json()
         return tasks
@@ -233,14 +233,20 @@ async def set_time(event):
             hours = int(time_parts[0])
             minutes = int(time_parts[1])
 
+
             hours = (hours - 0) % 24
 
             if 0 <= hours < 24 and 0 <= minutes < 60:
+                global user_id
                 user_id = event.sender_id
-                reminder_time = f'{hours:02d}:{minutes:02d}'
+                user_state = user_states.get(user_id)
+                if user_state:
+                    email = user_state.get('email')
+                    if email:
+                        reminder_time = f'{hours:02d}:{minutes:02d}'
 
                 with Session.begin() as session:
-                    user = session.query(User).filter(User.id == user_id).first()
+                    user = session.query(User).filter(User.email == email).first()
                     if user:
                         user.reminder_time = reminder_time
 
@@ -252,48 +258,34 @@ async def set_time(event):
                 scheduler.add_job(
                     send_user_reminder,
                     CronTrigger(hour=hours, minute=minutes),
-                    args=[user_id],
+                    args=[email],
                     id=job_id
                 )
 
-                await event.respond(f'The reminder time is set correctly')
+                await event.respond(f'Час нагадування встановлено корректно')
             else:
-                await event.respond("Incorrect time. Make sure the hours are between 0 and 23 and the minutes are between 0 and 59")
+                await event.respond("Некоректний час. Переконайтеся, що години від 0 до 23, а хвилини від 0 до 59")
         else:
-            await event.respond("Enter the time in HH:MM format, for example /set_time 14:30")
+            await event.respond("Введіть час у форматі ГГ:ХХ, наприклад /set_time 14:30")
     else:
-        await event.respond("Enter command just /set_time HH:MM, for example /set_time 14:30")
+        await event.respond("Введіть команду у форматі /set_time ГГ:ХХ, наприклад /set_time 14:30")
 
 
-async def send_user_reminder(user_id):
+
+
+async def send_user_reminder(email):
+    global user_id
     now = datetime.now().date()
     previous_day = now - timedelta(days=1)
 
-    with Session.begin() as session:
-        user = session.scalar(select(User).where(User.id == user_id))
+    with Session() as session:
+        user = session.query(User).filter(User.email == email).first()
         if user:
-            email = user.email
-            tasks = get_tasks(email)
-
-            if tasks:
-                missed_tasks = [task for task in tasks if datetime.strptime(task.get('deadline'), '%Y-%m-%d').date() == previous_day]
-                if missed_tasks:
-                    await client.send_message(user_id, f'You have missed tasks for {previous_day}.')
-                else:
-                    await client.send_message(user_id, "Just a reminder, you have pending tasks!")
+                await client.send_message(
+                    user_id,
+                    "Не забудьте перевірити свої завдання!"
+                )
 
 
-def get_missed_tasks(email: str, previous_day: datetime):
-    tasks = get_tasks(email)
-    if tasks:
-        return [task for task in tasks if datetime.strptime(task.get('deadline'), '%Y-%m-%d').date() == previous_day]
-    return []
-
-
-def start_scheduler():
-    scheduler.start()
-
-
-if __name__ == '__main__':
-    start_scheduler()
-    client.run_until_disconnected()
+scheduler.start()
+client.run_until_disconnected()

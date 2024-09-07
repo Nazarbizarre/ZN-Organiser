@@ -6,3 +6,4 @@ fastapi
 python-dotenv
 requests
 telethon
+apscheduler
