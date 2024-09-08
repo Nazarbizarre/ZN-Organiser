@@ -9,11 +9,13 @@ from datetime import datetime
 def board():
     current = current_user.email
     data = {
-        "email": current
+        "email": current,
+        "completed": False
     }
     tasks = {
         "tasks":get(f"{BACKEND_URL}/get_tasks", json=data).json()
     }
+    print(tasks)
     nickname = current.split("@")[0]
-    return render_template("board.html", **tasks, nickname=nickname)
+    return render_template("board.html", tasks=tasks, nickname=nickname)
 

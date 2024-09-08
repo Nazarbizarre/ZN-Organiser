@@ -6,6 +6,13 @@ from os import getenv
 BACKEND_URL = getenv("BACKEND_URL")
 from datetime import datetime
 
+def sort_dates(dates):
+    # Define a key function that converts a date string to a datetime object
+    def date_key(date_string):
+        return datetime.strptime(date_string, "%d/%m/%Y")
+     
+    # Use the sorted function to sort the list of dates, using the date_key function as the key
+    return sorted(dates, key=date_key)
 
 @login_required
 @app.get("/calendar")
@@ -21,28 +28,19 @@ def calendar_post():
     print(current)
     start_date_str = request.form.get("start-date")
     end_date_str = request.form.get("end-date")
-
-    if start_date_str and end_date_str:
-        start_date = datetime.strptime(start_date_str, "%Y-%m-%d")  
-        end_date = datetime.strptime(end_date_str, "%Y-%m-%d")
-    else:
-        return "Start date and End date are required.", 400
-
-    # formatted_start_date = start_date.strftime("%d/%m/%Y")
-    # formatted_end_date = end_date.strftime("%d/%m/%Y")
     data = {
         "email": current,
-        "start_date": start_date,
-        "end_date": end_date
+        "start_date": start_date_str,
+        "end_date": end_date_str
     }
     print(data)
-    filtered_tasks = {
-        "filtered_tasks":get(f"{BACKEND_URL}/filters", json=data).json()
-    }
-    print(filtered_tasks)
-    tasks = filtered_tasks["filtered_tasks"]
-    print(tasks)
-    nickname = current.split("@")[0]
-    return render_template("calendar.html", filtered_tasks=tasks, nickname=nickname)
 
+    filtered_tasks = get(f"{BACKEND_URL}/filters", json=data).json()
+    print(filtered_tasks)
+    # filtered_tasks.sort(key = lambda date: datetime.strptime(date, "%d-%m-%Y"))
+    # filtered_tasks = sort_dates(filtered_tasks)
+    sorted_tasks = sorted(filtered_tasks, key=lambda x: datetime.strptime(x['deadline'], "%Y-%m-%d"))
+
+    nickname = current.split("@")[0]
+    return render_template("calendar.html", filtered_tasks=sorted_tasks, nickname=nickname, start_date=start_date_str, end_date=end_date_str)
 

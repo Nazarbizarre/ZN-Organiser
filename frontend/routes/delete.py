@@ -25,4 +25,4 @@ def delete_task(task_id):
         else:
             return f"Error {response.status_code}"
     if response == "no":
-        return redirect(url_for("product" , task_id=task_id))
+        return redirect(url_for("product" , product_id=task_id))

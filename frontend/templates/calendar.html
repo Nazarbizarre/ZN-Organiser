@@ -7,7 +7,67 @@
     {{ super() }}
 
     <style>
+      body {
+        background-color: #121212;
+        color: #ffffff;
+        text-align: center;
+      }
+
+
+      h1 {
+        margin-top: 100px;
+        font-size: 100px;
+      }
+
+
+      label {
+        color: white;
+      }
+
+
+
+      .end-date {
+        font-size: 25px;
+        margin-bottom: 25px;
+        margin-left: 50px;
+      }
+      
+      .start-date {
+        font-size: 25px;
+        margin-bottom: 25px;
+      }
+
+
+      .apply{
+        width: 440px;
+        display: block;
+        margin: 0 auto;
+        border-radius: 15px;
+        height: 37px;
+        margin-bottom: 30px;
+      }
+
+      .form-group {
+        text-align: center; 
+      }
+
+      th, td{
+        color: white;
+      }
+
+      tr {
+        border-bottom: 1px solid green;
+      }
+
+      table {
+        width: 100%;
+      }
+
+      a {
+        color: green;
+      }
     </style>
+
 {% endblock %}
 
 
@@ -18,21 +78,25 @@
 {% block content %}
   <form class="calendar" action="/calendar" method="post" id="calendar" name="calendar">
     <h1>Calendar</h1>
-    <label for="start-date">Start date</label>
+    <div class="form-group">
+    <label for="start-date" class="start-date" id="themeToggle">Start Date: </label>
     <input
       type="date"
       id="start-date"
       name="start-date"
+      value="{{start_date}}"
     />
-    <label for="end-date">End date</label>
+    <label for="end-date" class="end-date">End Date: </label>
     <input
       type="date"
       id="end-date"
       name="end-date"
+      value="{{end_date}}"
     />
     <button class="apply" type="submit" name="action" value="apply">
       Apply
     </button>
+    </div>
   </form>
 
   {% if filtered_tasks %}
@@ -41,6 +105,7 @@
         <tr>
           <th>Task</th>
           <th>Deadline</th>
+          <th>Completed</th>
         </tr>
       </thead>
       <tbody>
@@ -54,7 +119,6 @@
     {{ super() }}
     <script>
       var filtered = {{ filtered_tasks | default([]) | tojson }};
-      console.log(filtered);
 
     function addRows() {
       const tableBody = document.querySelector('#calendar tbody');
@@ -67,10 +131,22 @@
 
           let cell1 = newRow.insertCell(0);
           let cell2 = newRow.insertCell(1);
+          let cell3 = newRow.insertCell(2);
+          if (task.completed == true){
+          comp = "Yes"
+          }
+          else {
+            comp = "No"
+          }
 
+          let link = document.createElement('a');
+          link.href = `/task/${task.id}`; 
+          link.textContent = task.title;
+    
 
-          cell1.textContent =  task.title ;
+          cell1.appendChild(link);
           cell2.textContent = task.deadline ;
+          cell3.textContent = comp;
       }
   }
 
