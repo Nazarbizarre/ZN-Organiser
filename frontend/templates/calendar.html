@@ -7,39 +7,60 @@
     {{ super() }}
 
     <style>
-
     </style>
 {% endblock %}
 
-      {% if filtered_tasks %}
-      <table id="calendar">
-        <thead>
-          <tr>
-            <th>Task</th>
-            <th>Deadline</th>
-          </tr>
-        </thead>
-        <tbody>
 
-        </tbody>
-      </table>
-      {% endif %}
 
 
 
     
 {% block content %}
+  <form class="calendar" action="/calendar" method="post" id="calendar" name="calendar">
+    <h1>Calendar</h1>
+    <label for="start-date">Start date</label>
+    <input
+      type="date"
+      id="start-date"
+      name="start-date"
+    />
+    <label for="end-date">End date</label>
+    <input
+      type="date"
+      id="end-date"
+      name="end-date"
+    />
+    <button class="apply" type="submit" name="action" value="apply">
+      Apply
+    </button>
+  </form>
 
+  {% if filtered_tasks %}
+    <table id="calendar">
+      <thead>
+        <tr>
+          <th>Task</th>
+          <th>Deadline</th>
+        </tr>
+      </thead>
+      <tbody>
+
+      </tbody>
+    </table>
+{% endif %}
 {% endblock %}
 
 {% block scripts %}
     {{ super() }}
     <script>
+      var filtered = {{ filtered_tasks | default([]) | tojson }};
+      console.log(filtered);
+
     function addRows() {
       const tableBody = document.querySelector('#calendar tbody');
       
 
-      for (let task of filtered_tasks) {
+      for (let task of filtered) {
 
           let newRow = tableBody.insertRow();
 
@@ -55,7 +76,7 @@
 
 
   document.addEventListener('DOMContentLoaded', () => {
-    addRows(filtered_tasks);
+    addRows();
   });
 
 </script>
