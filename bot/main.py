@@ -84,9 +84,10 @@ async def display_tasks(event, email: str):
 
 def get_tasks(email: str):
     data = {
-        "email": email
+        "email": email,
+        "completed": False
     }
-    response = get(f"{BACKEND_URL}/get_tasks_bot", json=data)
+    response = get(f"{BACKEND_URL}/get_tasks", json=data)
     if response.status_code == 200:
         tasks = response.json()
         return tasks
@@ -103,6 +104,7 @@ async def all_tasks(event):
         await display_tasks(event, email)
     else:
         await event.respond("Please log in first.")
+
 
 
 @client.on(events.CallbackQuery(pattern=b'themes'))

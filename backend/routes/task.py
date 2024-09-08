@@ -6,13 +6,6 @@ from ..db import Session, Task
 from ..schemas import TaskData, UserTasks, TaskGetRequest, TaskTheme, FilterData
 
 
-@app.get("/get_tasks_bot")
-def get_tasks_bot(data: UserTasks):
-    with Session.begin() as session:
-        tasks = session.scalars(select(Task).where(Task.author == data.email)).all()
-        tasks = [TaskData.model_validate(task) for task in tasks]
-        return tasks
-
 
 
 @app.get("/get_tasks")
@@ -91,14 +84,13 @@ def themes(data: TaskTheme):
         return selected_tasks
     
 
-
-    
-
 @app.get('/filters')
 def filters(data: FilterData):
     with Session.begin() as session:
         start_date = data.start_date
         end_date = data.end_date
-        filtered = session.query(Task).where(and_(Task.author == data.email), Task.deadline.between(start_date, end_date))
+        start_datetime = datetime.strptime(start_date, "%Y-%m-%d")
+        end_datetime = datetime.strptime(end_date, "%Y-%m-%d")
+        filtered = session.query(Task).where(and_(Task.author == data.email), Task.deadline.between(start_datetime, end_datetime))
         filtered = [TaskData.model_validate(task) for task in filtered]
         return filtered

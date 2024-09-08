@@ -31,5 +31,5 @@ class TaskTheme(BaseModel):
 
 class FilterData(BaseModel):
     email: str
-    start_date: datetime
-    end_date: datetime
+    start_date: str
+    end_date: str
