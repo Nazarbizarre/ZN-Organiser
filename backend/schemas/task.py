@@ -33,3 +33,9 @@ class FilterData(BaseModel):
     email: str
     start_date: str
     end_date: str
+
+
+class AlertData(BaseModel):
+    email: str
+    now: str
+    tomorrow: str

@@ -3,15 +3,8 @@ from sqlalchemy import select, update, and_
 from datetime import datetime
 from fastapi import HTTPException
 from ..db import Session, Task
-from ..schemas import TaskData, UserTasks, TaskGetRequest, TaskTheme, FilterData
+from ..schemas import TaskData, UserTasks, TaskGetRequest, TaskTheme, FilterData, AlertData
 
-
-@app.get("/get_tasks_bot")
-def get_tasks_bot(data: UserTasks):
-    with Session.begin() as session:
-        tasks = session.scalars(select(Task).where(Task.author == data.email)).all()
-        tasks = [TaskData.model_validate(task) for task in tasks]
-        return tasks
 
 
 
@@ -91,9 +84,6 @@ def themes(data: TaskTheme):
         return selected_tasks
     
 
-
-    
-
 @app.get('/filters')
 def filters(data: FilterData):
     with Session.begin() as session:
@@ -104,3 +94,12 @@ def filters(data: FilterData):
         filtered = session.query(Task).where(and_(Task.author == data.email), Task.deadline.between(start_datetime, end_datetime))
         filtered = [TaskData.model_validate(task) for task in filtered]
         return filtered
+    
+
+@app.get("/alert")
+def alert(data: AlertData):
+    with Session.begin() as session:
+        now_date = datetime.strptime(data.now, "%Y-%m-%d")
+        tomorrow_date = datetime.strptime(data.tomorrow, "%Y-%m-%d")
+        alert_tasks = session.query(Task).where(and_(Task.author == data.email, Task.deadline == tomorrow_date.strftime("%Y-%m-%d"))).all()
+        return [{"title": task.title} for task in alert_tasks]
