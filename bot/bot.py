@@ -264,29 +264,46 @@ async def set_time(event):
                     id=job_id
                 )
 
-                await event.respond(f'Час нагадування встановлено корректно')
+                await event.respond(f'The reminder time is set correctly')
             else:
-                await event.respond("Некоректний час. Переконайтеся, що години від 0 до 23, а хвилини від 0 до 59")
+                await event.respond("Incorrect time. Make sure the hours are between 0 and 23 and the minutes are between 0 and 59")
         else:
-            await event.respond("Введіть час у форматі ГГ:ХХ, наприклад /set_time 14:30")
+            await event.respond("Enter the time in HH:MM format, for example /set_time 14:30")
     else:
-        await event.respond("Введіть команду у форматі /set_time ГГ:ХХ, наприклад /set_time 14:30")
+        await event.respond("Enter the command in the format /set_time HH:MM, for example /set_time 14:30")
 
 
 
 
 async def send_user_reminder(email):
     global user_id
-    now = datetime.now().date()
-    previous_day = now - timedelta(days=1)
+    _now = datetime.now().date()
+    tomorrow = _now + timedelta(days=1) 
+
+    now = _now.strftime("%Y-%m-%d")
+    tomorrow = tomorrow.strftime("%Y-%m-%d")
 
     with Session() as session:
         user = session.query(User).filter(User.email == email).first()
         if user:
+            data = {
+                "email": email,
+                "now": now,
+                "tomorrow": tomorrow
+            }
+            response = get(f"{BACKEND_URL}/alert", json=data).json()
+
+            if response:
+                task_titles = [task.get('title') for task in response]
+                tasks_list = "\n".join(task_titles)
+                await client.send_message(user_id, f"You have tasks due tomorrow:\n{tasks_list}")
+            else:
                 await client.send_message(
                     user_id,
-                    "Не забудьте перевірити свої завдання!"
+                    "Don't forget to check your tasks that need to be completed!"
                 )
+
+
 
 
 scheduler.start()
