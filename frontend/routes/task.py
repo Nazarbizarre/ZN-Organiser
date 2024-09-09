@@ -4,7 +4,7 @@ from .. import app, BACKEND_URL
 
 from flask import render_template, request, redirect, url_for
 
-from flask_login import login_required
+from flask_login import login_required, current_user
 
 from requests import get, post
 

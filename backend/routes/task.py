@@ -9,7 +9,7 @@ from ..schemas import TaskData, UserTasks, TaskGetRequest, TaskTheme, FilterData
 
 
 @app.get("/get_tasks")
-def get_tasks():
+def get_tasks(data: UserTasks):
     with Session.begin() as session:
         tasks = session.scalars(select(Task).where(Task.author == data.email).where(Task.completed == data.completed)).all()
         tasks = [TaskData.model_validate(task) for task in tasks]
