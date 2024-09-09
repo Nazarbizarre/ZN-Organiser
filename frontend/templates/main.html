@@ -134,7 +134,7 @@
     {% if tasks %}
         <div class="parent">
             {% for task in tasks %}
-                <div class="objects" draggable="true">
+                <div class="objects" draggable="true" data-task-id="{{ task.id }}">
                     <a href="/task/{{ task.id }}">
                         <div class="card">
                             <div class="card-body">
@@ -159,25 +159,34 @@
                 object.draggable = true;
                 object.addEventListener('dragstart', dragStart);
                 object.addEventListener('dragend', dragEnd);
+                const taskId = object.dataset.taskId;
+                const storedPosition = localStorage.getItem(`task-${taskId}`);
+                if (storedPosition) {
+                    const [left, top] = storedPosition.split(',');
+                    object.style.left = `${left}px`;
+                    object.style.top = `${top}px`;
+                }
             });
         }
-
+        
         let dragStartX, dragStartY;
-
+        
         function dragStart(e) {
             dragStartX = e.clientX - this.getBoundingClientRect().left;
             dragStartY = e.clientY - this.getBoundingClientRect().top;
             e.dataTransfer.setDragImage(this, dragStartX, dragStartY);
             this.style.opacity = '0.5';
         }
-
+        
         function dragEnd(e) {
             this.style.opacity = '1';
             this.style.left = `${e.clientX - dragStartX}px`;
             this.style.top = `${e.clientY - dragStartY}px`;
             this.style.transition = 'left 0.5s ease, top 0.5s ease';
+            const taskId = this.dataset.taskId;
+            localStorage.setItem(`task-${taskId}`, `${e.clientX - dragStartX},${e.clientY - dragStartY}`);
         }
-
+        
         document.addEventListener('DOMContentLoaded', makeDraggable);
     </script>
 {% endblock %}
