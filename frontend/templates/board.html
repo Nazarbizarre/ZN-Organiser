@@ -84,7 +84,7 @@
         <th>Title</th>
         <th>Deadline</th>
       </tr>
-      {% for task in tasks %} {% if task.theme == 'Games' %}
+      {% for task in tasks %} {% if task.theme == 'Education' %}
       <tr>
         <td><a href="/task/{{ task.id }}">{{ task.title }}</a></td>
         <td>{{ task.deadline }}</td>
@@ -102,7 +102,7 @@
         <th>Deadline</th>
       </tr>
 
-      {% for task in tasks %} {% if task.theme == 'Hobby' %}
+      {% for task in tasks %} {% if task.theme == 'Fun' %}
 
       <tr>
         <td><a href="/task/{{ task.id }}">{{ task.title }}</a></td>
@@ -124,7 +124,7 @@
         <th>Deadline</th>
       </tr>
 
-      {% for task in tasks %} {% if task.theme == 'Sport' %}
+      {% for task in tasks %} {% if task.theme == 'Chores' %}
 
       <tr>
         <td><a href="/task/{{ task.id }}">{{ task.title }}</a></td>
