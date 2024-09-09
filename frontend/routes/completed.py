@@ -1,21 +1,21 @@
-from flask import render_template, request
+from .. import app, BACKEND_URL
+from flask import render_template
 from requests import get
 from flask_login import current_user, login_required
-from .. import app, BACKEND_URL
-from datetime import datetime
+from os import getenv
 
-@app.get("/board")
+
+@app.get("/completed_tasks")
 @login_required
-def board():
+def completed():
     current = current_user.email
+    print(current)
     data = {
         "email": current,
-        "completed": False
+        "completed": True
     }
     tasks = {
         "tasks":get(f"{BACKEND_URL}/get_tasks", json=data).json()
     }
-    print(tasks)
     nickname = current.split("@")[0]
-    return render_template("board.html", tasks=tasks, nickname=nickname)
-
+    return render_template("completed.html", **tasks, nickname=nickname)

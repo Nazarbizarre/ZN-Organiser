@@ -7,6 +7,12 @@ BACKEND_URL = getenv("BACKEND_URL")
 
 @app.get("/")
 def index():
+    current = current_user.email
+    print(current)
+    data = {
+        "email": current,
+        "completed": False
+    }
     tasks = {
         "tasks":get(f"{BACKEND_URL}/get_tasks").json()
     }

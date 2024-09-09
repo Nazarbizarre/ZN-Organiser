@@ -1,0 +1,238 @@
+
+{% extends '__base.html' %}
+
+{% block title %}Main Page{% endblock %}
+
+{% block styles %}
+    {{ super() }}
+
+    <style>
+            body {
+                background-color: #121212;
+                transition: background-color 0.8s, color 0.8s;
+                color: #ffffff;
+                padding-top: 70px;
+            }
+    
+    
+            .toggle-container {
+                position: absolute;
+                top: 20px;
+                right: 20px;
+            }
+            
+    
+            #themeToggle {
+                display: none;
+            }
+            
+            .toggle-switch {
+                width: 60px;
+                height: 30px;
+                background-color: #ccc;
+                border-radius: 30px;
+                position: relative;
+                display: inline-block;
+                cursor: pointer;
+                transition: background-color 0.8s;
+            }
+            
+            .toggle-switch::before {
+                content: "";
+                position: absolute;
+                width: 26px;
+                height: 26px;
+                background-color: #121212;
+                border-radius: 50%;
+                top: 2px;
+                left: 2px;
+                transition: transform 0.8s;
+            }
+            
+            #themeToggle:checked + .toggle-switch {
+                background-color: #ffffff;
+            }
+            
+            #themeToggle:checked + .toggle-switch::before {
+                transform: translateX(30px);
+                background-color: #ccc;
+            }
+    
+            
+            .form-control {
+                background-color: #333333;
+                border: none;
+                color: #ffffff;
+            }
+            .form-control:focus {
+                background-color: #444444;
+            }
+            .btn-outline-success {
+                color: #ffffff;
+                border-color: #4caf50;
+            }
+            .btn-outline-success:hover {
+                background-color: #4caf50;
+                color: #ffffff;
+            }
+            .card {
+                background-color: #333333;
+                border: none;
+                color: #ffffff;
+                cursor: pointer;
+                transition: transform 0.3s ease, height 0.3s ease;
+                width: 320px;
+                height: 110px;
+                overflow: hidden;
+            }
+            .card-title {
+                color: #4caf50;
+                font-size: 1.5rem;
+                text-decoration: none;
+            }
+            .card-text {
+                color: #b8b8b8;
+            }
+            .badge-primary {
+                background-color: #4caf50;
+                color: #ffffff;
+                font-size: 1rem;
+                padding: 0.5rem 1rem;
+                border-radius: 0.25rem;
+            }
+            .parent {
+                display: flex;
+                flex-direction: column;
+                align-items:start;
+                gap: 0px;
+                padding: 20px;
+            }
+            .objects {
+                max-width: 300px;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                transition: transform 0.3s ease;
+            }
+            
+            .task-list {
+
+                list-style: none;
+    
+                padding: 0;
+    
+                margin: 0;
+    
+                display: block;
+    
+            }
+    
+            
+    
+            .task-list li {
+    
+                margin: 20px;
+    
+            }
+    
+            
+    
+            .task-list a {
+    
+                text-decoration: none;
+    
+                color: #4caf50;
+    
+                display: block;
+    
+                padding: 30px;
+    
+                border-radius: 10px;
+    
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    
+                transition: transform 0.3s ease;
+    
+            }
+    
+            
+    
+            .task-list a:hover {
+    
+                color: #1a1a1a;
+    
+                transform: scale(1.05);
+    
+            }
+    
+            
+    
+            .completed-text {
+    
+                font-size: 1.5rem;
+    
+                font-weight: bold;
+    
+                color: #121212; /* default color */
+    
+            }
+    
+            
+    
+            body.light-mode .completed-text {
+    
+                color: #000000; /* change color to black when light mode is enabled */
+    
+            }
+    
+            
+    
+            body.light-mode .task-list a {
+    
+                color: #000000; /* change color to black when light mode is enabled */
+    
+            }
+
+            .btn {
+                display: inline-block;
+                padding: 10px 20px;
+                margin-top: 20px;
+                background-color: #81c784;
+                color: #1a1a1a;
+                text-decoration: none;
+                font-weight: bold;
+                border-radius: 5px;
+                transition: background-color 0.3s;
+                text-align: center;
+                width:100%;
+            }
+            .btn:hover {
+                background-color: lightgreen;
+                color: black;
+            }
+            
+        </style>
+{% endblock %}
+
+{% block content %}
+    {% if tasks %}
+        <div class="parent">
+            <div class='completed-block'>
+            <div class="completed-text">Completed</div>
+            <ul class="task-list">
+                {% for task in tasks %}
+                    <li>
+                        <a href="/task/{{ task.id }}">
+                            {{ task.title }} ({{ task.deadline }})
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+{% endblock %}

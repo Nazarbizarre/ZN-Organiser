@@ -1,20 +1,45 @@
-{% extends '__base.html' %} {% block title %}Board{% endblock %} {% block styles
-%} {{ super() }}
+{% extends '__base.html' %} 
+
+{% block title %}Board{% endblock %} 
+
+
+{% block styles%} 
+{{ super() }}
+
 <style>
+
+
+
+  body {
+    background-color: #121212;
+    text-align: center;
+    color: white;
+
+  }
+
+  h1 {
+    margin-top: 70px;
+    color: white;
+    font-size: 100px;
+  }
+
+
   .container {
     display: flex;
-    justify-content: center;
+    height: 50vh;
     align-items: center;
-    height: 100vh;
+    justify-content: center;
   }
   
   .theme-column {
-    background-color: #f0f0f0;
+    background-color: #1f1f1f;
     padding: 20px;
     margin: 20px;
-    border: 1px solid #ddd;
+    border: 1px solid green;
     border-radius: 10px;
     width: 300px;
+    margin-top: 180px;
+    height: 500px;
   }
 
   .theme-header {
@@ -30,36 +55,30 @@
 
   .task-table th,
   .task-table td {
-    border: 1px solid #ddd;
+    border: 1px solid green;
     padding: 10px;
     text-align: left;
   }
 
   .task-table th {
-    background-color: #f0f0f0;
+    background-color: #1f1f1f;
   }
 
-  .light-mode {
-    background-color: #fff;
-    color: #333;
-  }
-
-  .dark-mode {
-    background-color: #333;
-    color: #fff;
-  }
 </style>
-{% endblock %} {% block content %}
+{% endblock %} 
+
+{% block content %}
+
 
 <h1>Board</h1>
 
-<h2 id="Name">Tasks Sorted By Theme</h2>
+<h2>Tasks Sorted By Theme</h2>
 
 {% if tasks %}
 
 <div class="container">
   <div class="theme-column">
-    <h4 class="theme-header">Геймс</h4>
+    <h4 class="theme-header">Education</h4>
     <table class="task-table">
       <tr>
         <th>Title</th>
@@ -74,7 +93,7 @@
     </table>
   </div>
   <div class="theme-column">
-    <h4 class="theme-header">Хоббі</h4>
+    <h4 class="theme-header">Fun</h4>
 
     <table class="task-table">
       <tr>
@@ -96,7 +115,7 @@
   </div>
 
   <div class="theme-column">
-    <h4 class="theme-header">Спорт</h4>
+    <h4 class="theme-header">Chores</h4>
 
     <table class="task-table">
       <tr>
