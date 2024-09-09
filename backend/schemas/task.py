@@ -27,3 +27,15 @@ class TaskGetRequest(BaseModel):
 class TaskTheme(BaseModel):
     email: str
     theme: str
+
+
+class FilterData(BaseModel):
+    email: str
+    start_date: str
+    end_date: str
+
+
+class AlertData(BaseModel):
+    email: str
+    now: str
+    tomorrow: str

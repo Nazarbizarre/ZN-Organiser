@@ -14,11 +14,6 @@
                 padding-top: 70px;
             }
     
-            body.light-mode {
-                background-color: #ffffff;
-                color: #121212;
-            }
-    
     
             .toggle-container {
                 position: absolute;
@@ -119,6 +114,85 @@
                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
                 transition: transform 0.3s ease;
             }
+            
+            .task-list {
+
+                list-style: none;
+    
+                padding: 0;
+    
+                margin: 0;
+    
+                display: block;
+    
+            }
+    
+            
+    
+            .task-list li {
+    
+                margin: 20px;
+    
+            }
+    
+            
+    
+            .task-list a {
+    
+                text-decoration: none;
+    
+                color: #4caf50;
+    
+                display: block;
+    
+                padding: 30px;
+    
+                border-radius: 10px;
+    
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    
+                transition: transform 0.3s ease;
+    
+            }
+    
+            
+    
+            .task-list a:hover {
+    
+                color: #1a1a1a;
+    
+                transform: scale(1.05);
+    
+            }
+    
+            
+    
+            .completed-text {
+    
+                font-size: 1.5rem;
+    
+                font-weight: bold;
+    
+                color: #121212; /* default color */
+    
+            }
+    
+            
+    
+            body.light-mode .completed-text {
+    
+                color: #000000; /* change color to black when light mode is enabled */
+    
+            }
+    
+            
+    
+            body.light-mode .task-list a {
+    
+                color: #000000; /* change color to black when light mode is enabled */
+    
+            }
+
             .btn {
                 display: inline-block;
                 padding: 10px 20px;
@@ -143,19 +217,19 @@
 {% block content %}
     {% if tasks %}
         <div class="parent">
-            {% for task in tasks %}
-                <div class="objects">
-                    <a href="/task/{{ task.id }}">
-                        <div class="card">
-                            <div class="card-body">
-                                <h2 class="card-title" style="color: {{ task.importance }};">{{ task.title }}</h2>
-                                <h3 class="card-text"><span class="badge badge-primary"  style="background-color: {{ task.importance }};">{{ task.deadline }}</span></h3>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            {% endfor %}
+            <div class='completed-block'>
+            <div class="completed-text">Completed</div>
+            <ul class="task-list">
+                {% for task in tasks %}
+                    <li>
+                        <a href="/task/{{ task.id }}">
+                            {{ task.title }} ({{ task.deadline }})
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
         </div>
+    </div>
     {% endif %}
 {% endblock %}
 

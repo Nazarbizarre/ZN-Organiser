@@ -7,7 +7,8 @@ login = [
 
 main = [
     [button.inline("All tasks", b'all_tasks')],
-    [button.inline("Themes", b'themes')]
+    [button.inline("Themes", b'themes')],
+    [button.inline("Filter by date", b'filter')]
 ]
 
 

@@ -14,55 +14,6 @@
                 padding-top: 70px;
             }
     
-            body.light-mode {
-                background-color: #ffffff;
-                color: #121212;
-            }
-    
-    
-            .toggle-container {
-                position: absolute;
-                top: 20px;
-                right: 20px;
-            }
-            
-    
-            #themeToggle {
-                display: none;
-            }
-            
-            .toggle-switch {
-                width: 60px;
-                height: 30px;
-                background-color: #ccc;
-                border-radius: 30px;
-                position: relative;
-                display: inline-block;
-                cursor: pointer;
-                transition: background-color 0.8s;
-            }
-            
-            .toggle-switch::before {
-                content: "";
-                position: absolute;
-                width: 26px;
-                height: 26px;
-                background-color: #121212;
-                border-radius: 50%;
-                top: 2px;
-                left: 2px;
-                transition: transform 0.8s;
-            }
-            
-            #themeToggle:checked + .toggle-switch {
-                background-color: #ffffff;
-            }
-            
-            #themeToggle:checked + .toggle-switch::before {
-                transform: translateX(30px);
-                background-color: #ccc;
-            }
-    
             
             .form-control {
                 background-color: #333333;

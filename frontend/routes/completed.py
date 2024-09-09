@@ -1,9 +1,9 @@
-from .. import app
+from .. import app, BACKEND_URL
 from flask import render_template
 from requests import get
 from flask_login import current_user, login_required
 from os import getenv
-BACKEND_URL = getenv("BACKEND_URL")
+
 
 @app.get("/completed_tasks")
 @login_required
