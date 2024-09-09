@@ -1,12 +1,12 @@
 from .. import app
-from flask import render_template, request
+from flask import render_template, request, redirect, url_for
 from requests import get
 from flask_login import current_user, login_required
 from os import getenv
 BACKEND_URL = getenv("BACKEND_URL")
 from datetime import datetime
 
-def sort_dates(dates):
+def sort_dates(dates): # ??? 
     # Define a key function that converts a date string to a datetime object
     def date_key(date_string):
         return datetime.strptime(date_string, "%d/%m/%Y")
@@ -26,8 +26,12 @@ def calendar_get():
 def calendar_post():
     current = current_user.email
     print(current)
-    start_date_str = request.form.get("start-date")
     end_date_str = request.form.get("end-date")
+    if not end_date_str:
+        return redirect(url_for("calendar_get"))
+    start_date_str = request.form.get("start-date")
+    if not start_date_str:
+        return redirect(url_for("calendar_get"))
     data = {
         "email": current,
         "start_date": start_date_str,

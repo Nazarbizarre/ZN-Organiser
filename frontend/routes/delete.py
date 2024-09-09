@@ -4,6 +4,7 @@ from requests import delete
 from flask_login import current_user
 from requests import get
 
+
 @app.get("/delete_task/<int:task_id>")
 def delete_validator(task_id):
     return render_template("delete.html", task_id = task_id)

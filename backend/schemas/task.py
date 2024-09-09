@@ -13,7 +13,7 @@ class TaskData(BaseModel):
     deadline: str
     theme: str
     importance: str
-    completed: bool
+    completed: Optional[bool] = False
 
 class UserTasks(BaseModel):
     email: str
