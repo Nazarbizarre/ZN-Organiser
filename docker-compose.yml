@@ -18,4 +18,9 @@ services:
     
     depends_on:
       - backend
+  
+  bot:
+    build: ./bot
+    depends_on:
+      - backend
     
