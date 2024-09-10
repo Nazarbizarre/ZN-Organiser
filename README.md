@@ -2,8 +2,6 @@
 
 **ZN-Organiser** is a modern task manager designed to streamline task organization and boost productivity. This project leverages cutting-edge technologies to create a powerful and flexible task management tool.
 
-![ZN-Organiser Logo](https://via.placeholder.com/150x150.png?text=ZN-Organiser+Logo)
-
 ## 🌟 Key Features
 
 - 📋 **Task Management**: Create, edit, delete, and organize tasks by categories and priorities.
@@ -15,10 +13,10 @@
 
 ### Frontend
 
-- ![HTML](https://via.placeholder.com/30x30.png?text=HTML) **HTML & CSS**: Structuring and styling the user interface.
-- ![JavaScript](https://via.placeholder.com/30x30.png?text=JS) **JavaScript**: Adding interactivity and dynamic functionality.
-- ![Bootstrap](https://via.placeholder.com/30x30.png?text=Bootstrap) **Bootstrap**: Responsive and mobile-first front-end framework.
-
+- <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/HTML5_logo_and_wordmark.svg/512px-HTML5_logo_and_wordmark.svg.png" alt="HTML5" width="50"/>) **HTML** The best web page markup tool
+- <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTO5ryTY9VShCV5uJWhoBXkcxxlFB8O5bbxGA&s" alt="Image" width="50"/> **CSS**: Technology that allows you to add incredible styles to your pages
+- <img src="https://i0.wp.com/theicom.org/wp-content/uploads/2016/03/js-logo.png?fit=500%2C500&ssl=1&w=640" alt="JavaScript" width="50"/> **JavaScript**: Adding interactivity and dynamic functionality.
+- <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Bootstrap_logo.svg/1280px-Bootstrap_logo.svg.png" alt="Bootstrap" width="50"/> **Bootstrap**: A popular framework with convenient documentation that gives a lot of beautiful details for your pages.
 ### Backend
 
 - <img src="https://banner2.cleanpng.com/20180412/kye/avffc0w7m.webp" alt="Image" width="50"/>**Python**: Core programming language.
