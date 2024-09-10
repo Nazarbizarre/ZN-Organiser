@@ -14,7 +14,7 @@
 ### Frontend
 
 - <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/HTML5_logo_and_wordmark.svg/512px-HTML5_logo_and_wordmark.svg.png" alt="HTML5" width="50"/>) **HTML** The best web page markup tool
-- <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTO5ryTY9VShCV5uJWhoBXkcxxlFB8O5bbxGA&s" alt="Image" width="50"/> **CSS**: Technology that allows you to add incredible styles to your pages
+- <img src="https://w7.pngwing.com/pngs/224/77/png-transparent-website-web-internet-css-style-css3-technology-social-media-logos-i-flat-colorful-icon-thumbnail.png" alt="Image" width="50"/> **CSS**: Technology that allows you to add incredible styles to your pages
 - <img src="https://i0.wp.com/theicom.org/wp-content/uploads/2016/03/js-logo.png?fit=500%2C500&ssl=1&w=640" alt="JavaScript" width="50"/> **JavaScript**: Adding interactivity and dynamic functionality.
 - <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Bootstrap_logo.svg/1280px-Bootstrap_logo.svg.png" alt="Bootstrap" width="50"/> **Bootstrap**: A popular framework with convenient documentation that gives a lot of beautiful details for your pages.
 ### Backend
