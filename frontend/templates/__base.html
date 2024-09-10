@@ -17,6 +17,34 @@
 
     {% block styles %}
     <style>
+      #sform {
+        height: 45px;
+        width: 300px;
+      }
+
+      #sub {
+        margin: 0px;
+        height: 45px;
+        width: 125px;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        background-color: black;
+        color: #4caf50;
+        font-weight: 200;
+      }
+
+      #sub:hover {
+        background-color: #4caf50;
+        color: black;
+      }
+
+      #search {
+        width: 300px;
+        color:white;
+        background: white;
+      }
+
       a {
         text-decoration: none;
       }
@@ -38,16 +66,6 @@
       .nav-link:hover,
       .nav-link:focus {
         color: #4caf50;
-      }
-      .dropdown-menu {
-        background-color: #1f1f1f;
-      }
-      .dropdown-item {
-        color: #b8b8b8;
-      }
-      .dropdown-item:hover {
-        color: #ffffff;
-        background-color: #333333;
       }
 
     </style>
@@ -83,24 +101,6 @@
             <li class="nav-item">
               <a class="nav-link" href="/calendar">🗓️Calendar</a>
             </li>
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-                >⬇️Dropdown</a
-              >
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><hr class="dropdown-divider" /></li>
-                <li>
-                  <a class="dropdown-item" href="#">Something else here</a>
-                </li>
-              </ul>
-            </li>
             <li class="nav-item user-icon">
               <div
                 class="d-flex align-items-center justify-content-center h-100 ms-2"
@@ -115,6 +115,7 @@
             role="search"
             action="{{ url_for('search') }}"
             method="get"
+            id="sform"
           >
             <input
               class="form-control me-2"
@@ -123,8 +124,10 @@
               placeholder="Search"
               aria-label="Search"
               value="{{ request.args.get('query', '') }}"
+              id="search"
+              style="color:white;"
             />
-            <button class="btn btn-outline-success" type="submit">
+            <button class="btn btn-outline-success" type="submit" id="sub">
               Search
             </button>
           </form>

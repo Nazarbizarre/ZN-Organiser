@@ -6,14 +6,6 @@ from os import getenv
 BACKEND_URL = getenv("BACKEND_URL")
 from datetime import datetime
 
-def sort_dates(dates): # ??? 
-    # Define a key function that converts a date string to a datetime object
-    def date_key(date_string):
-        return datetime.strptime(date_string, "%d/%m/%Y")
-     
-    # Use the sorted function to sort the list of dates, using the date_key function as the key
-    return sorted(dates, key=date_key)
-
 @login_required
 @app.get("/calendar")
 def calendar_get():
