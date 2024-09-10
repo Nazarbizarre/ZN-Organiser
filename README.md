@@ -20,7 +20,7 @@
 ### Backend
 
 - <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Python_logo_01.svg/2048px-Python_logo_01.svg.png" alt="Image" width="50"/>**Python**: Core programming language.
-- <img src="https://icon2.cleanpng.com/20180829/okc/kisspng-flask-python-web-framework-representational-state-flask-stickker-1713946755581.webp" alt="Flask Cover" width="50"/> **Flask**: Lightweight WSGI web application framework.
+- <img src="https://miro.medium.com/v2/resize:fit:438/1*dQvABiWzbE28OTPYjzElKw.png" alt="Flask Cover" width="50"/> **Flask**: Lightweight WSGI web application framework.
 - <img src="https://www.simplilearn.com/ice9/free_resources_article_thumb/FastAPI_b.jpg" alt="FastAPI" width="50"/> **FastAPI**: Fast, modern, and easy-to-use web framework.
 ) **FastAPI**: Fast, modern, and easy-to-use web framework.
 - <img src="https://hakin9.org/wp-content/uploads/2019/08/connect-a-flask-app-to-a-mysql-database-with-sqlalchemy-and-pymysql.jpg" alt="SQLAlchemy" width="50"/>**SQLAlchemy**: SQL toolkit and Object-Relational Mapping (ORM) library.
