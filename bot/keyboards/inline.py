@@ -13,7 +13,7 @@ main = [
 
 
 themes = [
-    [button.inline("Hobby", b'theme_Hobby')],
-    [button.inline("Games", b'theme_Games')],
-    [button.inline("Sports", b'theme_Sports')]
+    [button.inline("Education", b'theme_Education')],
+    [button.inline("Fun", b'theme_Fun')],
+    [button.inline("Chores", b'theme_Chores')]
 ]
