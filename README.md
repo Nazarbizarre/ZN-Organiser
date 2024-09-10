@@ -22,7 +22,7 @@
 ### Backend
 
 - ![Python](https://via.placeholder.com/30x30.png?text=Python) **Python**: Core programming language.
-- <img src="https://blog.appseed.us/content/images/2023/10/cover-flask.jpg" alt="Flask Cover" width="100"/> **Flask**: Lightweight WSGI web application framework.
+- <img src="https://blog.appseed.us/content/images/2023/10/cover-flask.jpg" alt="Flask Cover" width="50"/> **Flask**: Lightweight WSGI web application framework.
 - ![FastAPI](https://via.placeholder.com/30x30.png?text=FastAPI) **FastAPI**: Fast, modern, and easy-to-use web framework.
 - ![SQLAlchemy](https://via.placeholder.com/30x30.png?text=SQLAlchemy) **SQLAlchemy**: SQL toolkit and Object-Relational Mapping (ORM) library.
 - ![Docker](https://via.placeholder.com/30x30.png?text=Docker) **Docker**: Containerization to ensure the application runs consistently across different environments.
