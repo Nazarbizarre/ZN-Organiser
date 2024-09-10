@@ -1,2 +1,4 @@
 telethon
 apscheduler
+sqlalchemy
+requests

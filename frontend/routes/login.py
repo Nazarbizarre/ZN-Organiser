@@ -50,10 +50,12 @@ def register_post():
        return redirect(url_for('login'))
     return render_template('form_template.html', form=form)
 
+
 @app.get('/login')
 def login():
     form = LoginForm()
     return render_template('form_template.html', form=form)
+
 
 @app.post('/login')
 def login_post():
@@ -69,3 +71,34 @@ def login_post():
             else:
                 flash("Wrong nickname")
     return render_template('form_template.html', form=form)
+
+
+@app.post("/users/get_user/<string:email>/<string:password>")
+def users_get(email, password):
+    with Session.begin() as session:
+        user = session.scalar(select(User).where(User.email == email))
+        if user and user.password == password:
+            return {"context": True}
+        else:
+            return {"context": False}
+        
+
+@app.get("/users/user_email/<string:email>")
+def get_by_email(email):
+    with Session() as session:
+        user = session.query(User).filter(User.email == email).first()
+        if user:
+            return {"context": True}
+        else:
+            return {"context": False}
+        
+
+@app.post("/users/reminder/<string:email>/<string:time>")
+def set_reminder_time(email, time):
+    with Session.begin() as session:
+        user = session.query(User).filter(User.email == email).first()
+        if user:
+            user.reminder_time = time
+            return {"context": True}
+        else:
+            return {"context": False}

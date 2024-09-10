@@ -1,9 +1,9 @@
-from ..main import app
+from main import app
 from sqlalchemy import select, update, and_
 from datetime import datetime
 from fastapi import HTTPException
-from ..db import Session, Task
-from ..schemas import TaskData, UserTasks, TaskGetRequest, TaskTheme, FilterData, AlertData
+from db import Session, Task
+from schemas import TaskData, UserTasks, TaskGetRequest, TaskTheme, FilterData, AlertData
 
 
 
