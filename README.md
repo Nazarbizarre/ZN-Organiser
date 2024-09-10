@@ -1,1 +1,37 @@
-# ZN-Organiser
+# 📝 ZN-Organiser
+
+**ZN-Organiser** is a modern task manager designed to streamline task organization and boost productivity. This project leverages cutting-edge technologies to create a powerful and flexible task management tool.
+
+## 🌟 Key Features
+
+- 📋 **Task Management**: Create, edit, delete, and organize tasks by categories and priorities.
+- 📆 **Deadline Setting**: Easily manage task deadlines.
+- 🔔 **Reminders**: Set up reminders for upcoming deadlines.
+- 📊 **Analytics**: View statistics and track task progress.
+
+## 🚀 Technologies
+
+### Frontend
+
+- <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/HTML5_logo_and_wordmark.svg/512px-HTML5_logo_and_wordmark.svg.png" alt="HTML5" width="50"/>) **HTML** The best web page markup tool
+- <img src="https://logowik.com/content/uploads/images/css-icon5555.logowik.com.webp" alt="Image" width="50"/> **CSS**: Technology that allows you to add incredible styles to your pages
+- <img src="https://i0.wp.com/theicom.org/wp-content/uploads/2016/03/js-logo.png?fit=500%2C500&ssl=1&w=640" alt="JavaScript" width="50"/> **JavaScript**: Adding interactivity and dynamic functionality.
+- <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Bootstrap_logo.svg/1280px-Bootstrap_logo.svg.png" alt="Bootstrap" width="50"/> **Bootstrap**: A popular framework with convenient documentation that gives a lot of beautiful details for your pages.
+### Backend
+
+- <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Python_logo_01.svg/2048px-Python_logo_01.svg.png" alt="Image" width="50"/>**Python**: Core programming language.
+- <img src="https://miro.medium.com/v2/resize:fit:438/1*dQvABiWzbE28OTPYjzElKw.png" alt="Flask Cover" width="50"/> **Flask**: Lightweight WSGI web application framework.
+- <img src="https://www.simplilearn.com/ice9/free_resources_article_thumb/FastAPI_b.jpg" alt="FastAPI" width="50"/> **FastAPI**: Fast, modern, and easy-to-use web framework.
+) **FastAPI**: Fast, modern, and easy-to-use web framework.
+- <img src="https://hakin9.org/wp-content/uploads/2019/08/connect-a-flask-app-to-a-mysql-database-with-sqlalchemy-and-pymysql.jpg" alt="SQLAlchemy" width="50"/>**SQLAlchemy**: SQL toolkit and Object-Relational Mapping (ORM) library.
+### DevOps
+- <img src="https://www.docker.com/wp-content/uploads/2023/08/logo-dont-stretch.svg" alt="Docker" width="40"/> **Docker**: Containerization to ensure the application runs consistently across different environments.
+
+
+## 🛠️ Installation
+
+To get started with ZN-Organiser, follow these steps:
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/Nazarbizarre/ZN-Organiser.git
