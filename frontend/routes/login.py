@@ -31,6 +31,7 @@ def register():
     form = RegisterForm()
     return render_template('form_template.html', form=form)
 
+
 @app.post('/register')
 def register_post():
     form = RegisterForm()

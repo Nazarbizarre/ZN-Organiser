@@ -10,6 +10,7 @@ from requests import get
 def delete_validator(task_id):
     return render_template("delete.html", task_id = task_id)
 
+
 @app.post("/delete_task/<int:task_id>")
 @login_required
 def delete_task(task_id):

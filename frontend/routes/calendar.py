@@ -6,6 +6,7 @@ from os import getenv
 BACKEND_URL = getenv("BACKEND_URL")
 from datetime import datetime
 
+
 @login_required
 @app.get("/calendar")
 def calendar_get():

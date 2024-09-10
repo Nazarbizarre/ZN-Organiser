@@ -1,11 +1,6 @@
-
-
 from .. import app, BACKEND_URL
-
 from flask import render_template
-
 from flask_login import login_required
-
 from requests import get
 
 

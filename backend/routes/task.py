@@ -59,7 +59,8 @@ def edit_task(data: TaskData):
         )
         session.execute(upd)# САЛАМ
         return task
-    
+
+
 @app.post("/task_done")
 def task_done(data: TaskGetRequest):
     with Session.begin() as session:
@@ -73,6 +74,7 @@ def task_done(data: TaskGetRequest):
         )
         session.execute(upd)
         return task
+
 
 @app.get("/themes")
 def themes(data: TaskTheme):

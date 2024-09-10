@@ -1,10 +1,7 @@
-
-
 from .. import app, BACKEND_URL
 from requests import request as request, get
 from flask_login import current_user
 from flask import render_template, request, redirect, url_for
-
 
 
 @app.get('/search')

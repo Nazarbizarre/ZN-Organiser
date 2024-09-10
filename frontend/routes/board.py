@@ -4,6 +4,7 @@ from flask_login import current_user, login_required
 from .. import app, BACKEND_URL
 from datetime import datetime
 
+
 @app.get("/board")
 @login_required
 def board():

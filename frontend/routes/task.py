@@ -1,18 +1,9 @@
 from os import getenv
-
 from .. import app, BACKEND_URL
-
 from flask import render_template, request, redirect, url_for
-
 from flask_login import login_required, current_user
-
 from requests import get, post
-
 from datetime import datetime
-
-
-
-
 
 
 @app.post("/add_task")
@@ -38,7 +29,6 @@ def add_task():
         return redirect(url_for("index"))
     return(f"Error {task.status_code}")
 
- 
  
 @app.get('/add_task')
 @login_required
