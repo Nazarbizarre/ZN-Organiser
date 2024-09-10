@@ -15,6 +15,7 @@ class TaskData(BaseModel):
     importance: str
     completed: Optional[bool] = False
 
+
 class UserTasks(BaseModel):
     email: str
     completed: bool
