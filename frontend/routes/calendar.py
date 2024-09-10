@@ -33,8 +33,6 @@ def calendar_post():
 
     filtered_tasks = get(f"{BACKEND_URL}/filters", json=data).json()
     print(filtered_tasks)
-    # filtered_tasks.sort(key = lambda date: datetime.strptime(date, "%d-%m-%Y"))
-    # filtered_tasks = sort_dates(filtered_tasks)
     sorted_tasks = sorted(filtered_tasks, key=lambda x: datetime.strptime(x['deadline'], "%Y-%m-%d"))
 
     nickname = current.split("@")[0]

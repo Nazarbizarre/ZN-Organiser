@@ -29,20 +29,25 @@
         text-align: center;
         justify-content: center;
         align-items: center;
-        background-color: black;
+        background-color: #1f1f1f;
         color: #4caf50;
         font-weight: 200;
       }
 
       #sub:hover {
-        background-color: #4caf50;
+        background-color: #378538;
         color: black;
       }
 
       #search {
         width: 300px;
         color:white;
-        background: white;
+        background: #2e2e2e;
+        border: 1px black;
+      }
+
+      #search::placeholder {
+        color: #393939;
       }
 
       a {
@@ -65,6 +70,11 @@
       }
       .nav-link:hover,
       .nav-link:focus {
+        color: #4caf50;
+      }
+
+      .navbar-brand:hover,
+      .navbar-brand:focus {
         color: #4caf50;
       }
 
@@ -125,7 +135,6 @@
               aria-label="Search"
               value="{{ request.args.get('query', '') }}"
               id="search"
-              style="color:white;"
             />
             <button class="btn btn-outline-success" type="submit" id="sub">
               Search
@@ -136,11 +145,10 @@
     </nav>
     {% endblock %}
 
-    <!-- <div class="container mt-5"> -->
       {% block content %}
 
       {% endblock %}
-    <!-- </div> -->
+
 
     <script
       src="https://cdn.jsdelivr.net/n pm/@popperjs/core@2.11.7/dist/umd/popper.min.js"

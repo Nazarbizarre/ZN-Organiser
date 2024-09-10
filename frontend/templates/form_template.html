@@ -1,8 +1,11 @@
 {% from '__helpers.html' import form_generate %}
 
 
+
 {% block content %}
 <div class="container">
+    <h1>ZN-Organiser</h1>
+    <h2>Simplify Your Day, Own Your Time</h2>
   {% with messages = get_flashed_messages() %} {% if messages %}
   <div class="form-message">
     {% for message in messages %}
@@ -46,12 +49,6 @@
         box-shadow: 0 15px 30px rgba(0, 0, 0, 0.7);
     }
     
-    h1 {
-        text-align: center;
-        margin-bottom: 30px;
-        color: #b19cd9;
-        font-size: 24px;
-    }
     
     .form-group {
         margin-bottom: 20px;
