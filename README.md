@@ -66,7 +66,6 @@ To get started with ZN-Organiser, follow these steps:
      - Enjoy
 
 4. **We also released a convenient tool for getting information about your account**
-   ## Link to the [bot](t.me/ZN_OrganiserBot)
    - Such as a reminder at a specified time
    - Viewing all tasks
    - Viewing tasks by topic
