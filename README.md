@@ -59,7 +59,7 @@ To get started with ZN-Organiser, follow these steps:
         - Paste into .env file
      - Then open terminal end enter
          ```bash
-            docker-compose up —build
+            docker-compose up
      - Go to the
        ```text
           http://127.0.0.1:5000
