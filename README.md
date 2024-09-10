@@ -21,13 +21,13 @@
 
 ### Backend
 
-- ![Python](https://via.placeholder.com/30x30.png?text=Python) **Python**: Core programming language.
+- <img src="https://banner2.cleanpng.com/20180412/kye/avffc0w7m.webp" alt="Image" width="50"/>**Python**: Core programming language.
 - <img src="https://blog.appseed.us/content/images/2023/10/cover-flask.jpg" alt="Flask Cover" width="50"/> **Flask**: Lightweight WSGI web application framework.
 - <img src="https://www.simplilearn.com/ice9/free_resources_article_thumb/FastAPI_b.jpg" alt="FastAPI" width="50"/> **FastAPI**: Fast, modern, and easy-to-use web framework.
 ) **FastAPI**: Fast, modern, and easy-to-use web framework.
 - <img src="https://hakin9.org/wp-content/uploads/2019/08/connect-a-flask-app-to-a-mysql-database-with-sqlalchemy-and-pymysql.jpg" alt="SQLAlchemy" width="50"/>**SQLAlchemy**: SQL toolkit and Object-Relational Mapping (ORM) library.
-  ### DevOps
-- <img src="https://www.docker.com/wp-content/uploads/2023/08/logo-dont-stretch.svg" alt="Docker" width="50"/> **Docker**: Containerization to ensure the application runs consistently across different environments.
+### DevOps
+- <img src="https://www.docker.com/wp-content/uploads/2023/08/logo-dont-stretch.svg" alt="Docker" width="40"/> **Docker**: Containerization to ensure the application runs consistently across different environments.
 
 
 ## 🛠️ Installation
