@@ -52,21 +52,20 @@ To get started with ZN-Organiser, follow these steps:
        ```text
           http://127.0.0.1:8000
       - **Get API_ID & API_HASH:
-        - Go to [website](my.telegram.org) and enter your phone number and click on
+        - Go to [website](https://my.telegram.org/) and enter your phone number and click on
           - Api Development Tools
         - And create your test application
         - Get your API_ID & API_HASH keys
         - Paste into .env file
      - Then open terminal end enter
          ```bash
-            docker-compose up —build
+            docker-compose up
      - Go to the
        ```text
           http://127.0.0.1:5000
      - Enjoy
 
 4. **We also released a convenient tool for getting information about your account**
-   ## Link to the [bot](t.me/ZN_OrganiserBot)
    - Such as a reminder at a specified time
    - Viewing all tasks
    - Viewing tasks by topic
