@@ -1,10 +1,18 @@
 from main import app
 from sqlalchemy import select, update, and_
 from datetime import datetime
+<<<<<<< HEAD
 from fastapi import HTTPException
 from db import Session, Task
 from schemas import TaskData, UserTasks, TaskGetRequest, TaskTheme, FilterData, AlertData
 
+=======
+from db import Session, Task
+from schemas import TaskData
+from fastapi import HTTPException
+from ..db import Session, Task
+from ..schemas import TaskData, UserTasks, DeleteTaskRequest
+>>>>>>> 77ffee05f88b47583bd7a4182886090f2854ebc3
 
 
 
