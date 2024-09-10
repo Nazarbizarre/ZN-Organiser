@@ -12,51 +12,11 @@
                 transition: background-color 0.8s, color 0.8s;
                 color: #ffffff;
                 padding-top: 70px;
+                text-align: center;
             }
     
     
-            .toggle-container {
-                position: absolute;
-                top: 20px;
-                right: 20px;
-            }
-            
-    
-            #themeToggle {
-                display: none;
-            }
-            
-            .toggle-switch {
-                width: 60px;
-                height: 30px;
-                background-color: #ccc;
-                border-radius: 30px;
-                position: relative;
-                display: inline-block;
-                cursor: pointer;
-                transition: background-color 0.8s;
-            }
-            
-            .toggle-switch::before {
-                content: "";
-                position: absolute;
-                width: 26px;
-                height: 26px;
-                background-color: #121212;
-                border-radius: 50%;
-                top: 2px;
-                left: 2px;
-                transition: transform 0.8s;
-            }
-            
-            #themeToggle:checked + .toggle-switch {
-                background-color: #ffffff;
-            }
-            
-            #themeToggle:checked + .toggle-switch::before {
-                transform: translateX(30px);
-                background-color: #ccc;
-            }
+
     
             
             .form-control {
@@ -106,6 +66,8 @@
                 align-items:start;
                 gap: 0px;
                 padding: 20px;
+                justify-content: center;
+                align-items: center;
             }
             .objects {
                 max-width: 300px;
@@ -138,7 +100,7 @@
             
     
             .task-list a {
-    
+                background-color: #1f1f1f;
                 text-decoration: none;
     
                 color: #4caf50;
@@ -152,6 +114,8 @@
                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     
                 transition: transform 0.3s ease;
+
+                font-weight: bold;
     
             }
     
@@ -159,7 +123,7 @@
     
             .task-list a:hover {
     
-                color: #1a1a1a;
+                color: #77b879;
     
                 transform: scale(1.05);
     
@@ -169,29 +133,13 @@
     
             .completed-text {
     
-                font-size: 1.5rem;
+                font-size: 70px;
     
                 font-weight: bold;
     
-                color: #121212; /* default color */
-    
+                color: white; /* default color */
             }
     
-            
-    
-            body.light-mode .completed-text {
-    
-                color: #000000; /* change color to black when light mode is enabled */
-    
-            }
-    
-            
-    
-            body.light-mode .task-list a {
-    
-                color: #000000; /* change color to black when light mode is enabled */
-    
-            }
 
             .btn {
                 display: inline-block;

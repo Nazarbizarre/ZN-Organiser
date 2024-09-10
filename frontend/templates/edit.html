@@ -97,16 +97,16 @@
                             <label for="choice" class="form-label">Category:</label>
                             <div class="radio-group">
                                 <label>
-                                    <input type="radio" name="choice" value="Sports" {% if task.choice == 'Sports' %} checked {% endif %}>
-                                    Sports
+                                    <input type="radio" name="choice" value="Education" {% if task.theme == 'Education' %} checked {% endif %}>
+                                    Education
                                 </label>
                                 <label>
-                                    <input type="radio" name="choice" value="Games" {% if task.choice == 'Games' %} checked {% endif %}>
-                                    Games
+                                    <input type="radio" name="choice" value="Fun" {% if task.theme == 'Games' %} checked {% endif %}>
+                                    Fun
                                 </label>
                                 <label>
-                                    <input type="radio" name="choice" value="Hobby" {% if task.choice == 'Hobby' %} checked {% endif %}>
-                                    Hobby
+                                    <input type="radio" name="choice" value="Chores" {% if task.theme == 'Hobby' %} checked {% endif %}>
+                                    Chores
                                 </label>
                             </div>
                         </div>

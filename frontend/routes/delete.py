@@ -1,15 +1,17 @@
 from .. import app,BACKEND_URL
 from flask import render_template, redirect, url_for,request
 from requests import delete
-from flask_login import current_user
+from flask_login import current_user, login_required
 from requests import get
 
 
 @app.get("/delete_task/<int:task_id>")
+@login_required
 def delete_validator(task_id):
     return render_template("delete.html", task_id = task_id)
 
 @app.post("/delete_task/<int:task_id>")
+@login_required
 def delete_task(task_id):
     response = request.form.get("response")
     tasks_response = get(f"{BACKEND_URL}/task/{task_id}")

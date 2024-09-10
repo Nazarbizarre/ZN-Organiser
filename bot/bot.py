@@ -5,10 +5,10 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.cron import CronTrigger
 from telethon import TelegramClient, events
 from sqlalchemy import select
-from flask_login import login_user
-from frontend.db import User, Session
-from requests import get
-from .keyboards import inline
+import logging
+# from frontend.db import User, Session
+from requests import get, post
+from keyboards import inline
 
 
 API_ID = getenv("API_ID")
@@ -19,6 +19,7 @@ BACKEND_URL = getenv("BACKEND_URL")
 
 client = TelegramClient('bot', API_ID, API_HASH).start(bot_token=BOT_TOKEN)
 scheduler = AsyncIOScheduler()
+logging.basicConfig(level=logging.INFO)
 
 user_states = {}
 
@@ -60,14 +61,22 @@ async def handle_message(event):
                 await event.respond('Too many failed attempts. Please try again later.')
                 return
             
-            with Session.begin() as session:
-                user = session.scalar(select(User).where(User.email == email))
-                if user and user.password == password:
-                    user_states[user_id] = {'state': 'logged_in', 'email': email}
-                    await event.respond(f'Registration successful, welcome {user.email}!', buttons=inline.main)
-                else:
-                    user_state['state'] = 'awaiting_email'
-                    await event.respond(f'Invalid email or password. Attempts left: {3 - user_state["attempts"]}. Please enter your email again:')
+            user = post(f"http://frontend:5000/users/get_user/{email}/{password}")
+            user = user.json()
+            if user.get("context") == True:
+                user_states[user_id] = {'state': 'logged_in', 'email': email}
+                await event.respond(f'Registration successful, welcome!', buttons=inline.main)
+            else:
+                user_state['state'] = 'awaiting_email'
+                await event.respond(f'Invalid email or password. Attempts left: {3 - user_state["attempts"]}. Please enter your email again:')
+            # with Session.begin() as session:
+            #     user = session.scalar(select(User).where(User.email == email))
+            #     if user and user.password == password:
+            #         user_states[user_id] = {'state': 'logged_in', 'email': email}
+            #         await event.respond(f'Registration successful, welcome {user.email}!', buttons=inline.main)
+            #     else:
+            #         user_state['state'] = 'awaiting_email'
+            #         await event.respond(f'Invalid email or password. Attempts left: {3 - user_state["attempts"]}. Please enter your email again:')
 
 
 
@@ -247,11 +256,11 @@ async def set_time(event):
                     if email:
                         reminder_time = f'{hours:02d}:{minutes:02d}'
 
-                with Session.begin() as session:
-                    user = session.query(User).filter(User.email == email).first()
-                    if user:
-                        user.reminder_time = reminder_time
-
+                # with Session.begin() as session:
+                #     user = session.query(User).filter(User.email == email).first()
+                #     if user:
+                #         user.reminder_time = reminder_time
+                response = post(f"http://frontend:5000/users/get_user/{email}/{reminder_time}")
 
                 job_id = f'reminder_{user_id}'
                 if scheduler.get_job(job_id):
@@ -283,25 +292,26 @@ async def send_user_reminder(email):
     now = _now.strftime("%Y-%m-%d")
     tomorrow = tomorrow.strftime("%Y-%m-%d")
 
-    with Session() as session:
-        user = session.query(User).filter(User.email == email).first()
-        if user:
-            data = {
-                "email": email,
-                "now": now,
-                "tomorrow": tomorrow
-            }
-            response = get(f"{BACKEND_URL}/alert", json=data).json()
+    # with Session() as session:
+    #     user = session.query(User).filter(User.email == email).first()
+    user_email = get(f"http://frontend:5000/users/user_email/{email}")
+    if user_email.json().get("context") == True:
+        data = {
+            "email": email,
+            "now": now,
+            "tomorrow": tomorrow
+        }
+        response = get(f"{BACKEND_URL}/alert", json=data).json()
 
-            if response:
-                task_titles = [task.get('title') for task in response]
-                tasks_list = "\n".join(task_titles)
-                await client.send_message(user_id, f"You have tasks due tomorrow:\n{tasks_list}")
-            else:
-                await client.send_message(
-                    user_id,
-                    "Don't forget to check your tasks that need to be completed!"
-                )
+        if response:
+            task_titles = [task.get('title') for task in response]
+            tasks_list = "\n".join(task_titles)
+            await client.send_message(user_id, f"You have tasks due tomorrow:\n{tasks_list}")
+        else:
+            await client.send_message(
+                user_id,
+                "Don't forget to check your tasks that need to be completed!"
+            )
 
 
 

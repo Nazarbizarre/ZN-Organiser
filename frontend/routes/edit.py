@@ -1,11 +1,12 @@
 from os import getenv
 from flask import render_template, request, redirect, url_for
 from requests import get, post, put
-from flask_login import current_user
+from flask_login import current_user, login_required
 from .. import app, BACKEND_URL
 
 
 @app.get("/edit_task/<int:task_id>")
+@login_required
 def edit_task(task_id):
     response = get(f"{BACKEND_URL}/task/{task_id}")
     if response.status_code == 200:
@@ -16,6 +17,7 @@ def edit_task(task_id):
 
 
 @app.post("/edit_task/<int:task_id>")
+@login_required
 def update_task(task_id):
     data = {
         "id": task_id,

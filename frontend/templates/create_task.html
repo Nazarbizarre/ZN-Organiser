@@ -81,6 +81,10 @@
         .mb-3 {
             margin-top: 30px;
         }
+
+        #submit {
+            margin-bottom:10px;
+        }
     </style>
 {% endblock %}
 
@@ -108,17 +112,17 @@
                                 </div>
                             </form>
                             <div class="radio-group">
-                                <label for="sports">
-                                    <input type="radio" id="sports" name="choice" value="Sports" required>
-                                    Sports
+                                <label for="education">
+                                    <input type="radio" id="education" name="choice" value="Education" required>
+                                    Education
                                 </label>
-                                <label for="games">
-                                    <input type="radio" id="games" name="choice" value="Games" required>
-                                    Games
+                                <label for="fun">
+                                    <input type="radio" id="fun" name="choice" value="Fun" required>
+                                    Fun
                                 </label>
-                                <label for="nature">
-                                    <input type="radio" id="hobby" name="choice" value="Hobby" required>
-                                    Hobby
+                                <label for="chores">
+                                    <input type="radio" id="chores" name="choice" value="Chores" required>
+                                    Chores
                                 </label>
                             </div>
 
@@ -131,7 +135,7 @@
                                 <p>Selected Color: <span id="colorValue">#ffffff</span></p>
                                 <input type="hidden" name="selectedColor" id="selectedColor" value="#ffffff">
                 
-                        <button type="submit" class="btn btn-primary w-100">Submit</button>
+                        <button type="submit" class="btn btn-primary w-100" id="submit">Submit</button>
                         <h1></h1>
                         <a class="btn btn-danger w-100" id="back" href="/">Go Back</a>
                     </form>
